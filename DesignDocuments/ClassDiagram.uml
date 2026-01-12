@@ -1,0 +1,44 @@
+@startuml
+class GameService<<singleton>> {
+- Scene currentScene
+- Player player
+}
+
+class Player<<singleton>> {
+- Inventory inventory
+}
+
+class Inventory<<singleton>> {
+- Map[Item item, Int amount] items
+}
+
+class Scene {
+- Array[Transition] transitions
+- String description
+- Array[Item] itemsList
+getTransitionsFromItems()
+}
+
+class Transition {
+- Scene originScene
+- Scene endScene
+- String sceneDescription
+- String choiceDescription
+- Int requiredItemID
+- Boolean isSingleUse
+- Boolean isEnabled
+}
+
+class Item {
+- String description
+- Transition Transition
+}
+
+GameService ---> Scene
+GameService --> Player
+Player --> Inventory
+Inventory -> Item
+Scene -> Item
+Transition -> Item
+Scene <--> Transition
+@enduml
