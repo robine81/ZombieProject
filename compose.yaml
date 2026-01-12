@@ -1,0 +1,47 @@
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+
+    volumes:
+      - game-files:/var/lib/mysql
+
+    networks:
+      - spring-network
+
+    healthcheck:
+      test: [ "CMD", "mysqladmin","ping","-h","localhost","-u","$DB_USERNAME","-p$DB_PASS" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASS}
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQLDialect
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+    networks:
+      - spring-network
+
+networks:
+  spring-network:
+    driver: bridge
+
+volumes:
+  game-files:
+    driver: local
