@@ -4,6 +4,7 @@ services:
     restart: unless-stopped
 
     environment:
+      MYSQL_DATABASE: ${DB_NAME}
       MYSQL_ROOT_PASSWORD: ${DB_PASS}
 
     volumes:
