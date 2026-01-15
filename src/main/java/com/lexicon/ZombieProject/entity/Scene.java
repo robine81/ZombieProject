@@ -17,17 +17,20 @@ public class Scene {
     @OneToMany(mappedBy = "targetScene", cascade = CascadeType.ALL)
     private List<Transition> incomingTransitions;
 
+    private String sceneName;
+
     private String description;
 
     @OneToMany(mappedBy = "scene")
     private List<Item> items;
 
-    public Scene() {
-    }
+    public Scene() {}
 
-    public Scene(List<Transition> outgoingTransitions, List<Transition> incomingTransitions, String description, List<Item> items) {
+    public Scene(Long id, List<Transition> outgoingTransitions, List<Transition> incomingTransitions, String sceneName, String description, List<Item> items) {
+        this.id = id;
         this.outgoingTransitions = outgoingTransitions;
         this.incomingTransitions = incomingTransitions;
+        this.sceneName = sceneName;
         this.description = description;
         this.items = items;
     }
@@ -56,6 +59,14 @@ public class Scene {
         this.incomingTransitions = incomingTransitions;
     }
 
+    public String getSceneName() {
+        return sceneName;
+    }
+
+    public void setSceneName(String sceneName) {
+        this.sceneName = sceneName;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -74,5 +85,17 @@ public class Scene {
 
     public void getTransitionFromItems(){
 
+    }
+
+    @Override
+    public String toString() {
+        return "Scene{" +
+                "id=" + id +
+                ", outgoingTransitions=" + outgoingTransitions +
+                ", incomingTransitions=" + incomingTransitions +
+                ", sceneName='" + sceneName + '\'' +
+                ", description='" + description + '\'' +
+                ", items=" + items +
+                '}';
     }
 }
