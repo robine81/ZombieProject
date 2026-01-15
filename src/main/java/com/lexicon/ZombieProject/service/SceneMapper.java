@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Mapper {
+public class SceneMapper {
     private final SceneRepository sceneRepository;
 
     @Autowired
 
-    public Mapper(SceneRepository sceneRepository) {
+    public SceneMapper(SceneRepository sceneRepository) {
         this.sceneRepository = sceneRepository;
     }
 

@@ -4,7 +4,6 @@ import com.lexicon.ZombieProject.entity.Scene;
 import com.lexicon.ZombieProject.entity.dto.SceneDTO;
 import com.lexicon.ZombieProject.exception.ResourceAlreadyExistsException;
 import com.lexicon.ZombieProject.repository.SceneRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,9 +12,9 @@ import java.util.List;
 @Service
 public class SceneService {
     private final SceneRepository repository;
-    private final Mapper mapper;
+    private final SceneMapper mapper;
 
-    public SceneService(SceneRepository repository, Mapper mapper) {
+    public SceneService(SceneRepository repository, SceneMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
