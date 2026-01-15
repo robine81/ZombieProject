@@ -2,6 +2,7 @@ package com.lexicon.ZombieProject.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -57,19 +58,110 @@ public class Transition {
     public Transition() {
     }
 
-    public Transition(Scene originScene, Scene targetScene, String sceneDescription, String choiceDescription, List<Item> requiredItems, Boolean consumesRequiredItems, Item owner, List<Transition> enabledTransitions, List<Transition> enabledBy, List<Transition> disabledTransitions, List<Transition> disabledBy, Boolean isEnabled) {
-        this.originScene = originScene;
-        this.targetScene = targetScene;
-        this.sceneDescription = sceneDescription;
-        this.choiceDescription = choiceDescription;
-        this.requiredItems = requiredItems;
-        this.consumesRequiredItems = consumesRequiredItems;
-        this.owner = owner;
-        this.enabledTransitions = enabledTransitions;
-        this.enabledBy = enabledBy;
-        this.disabledTransitions = disabledTransitions;
-        this.disabledBy = disabledBy;
-        this.isEnabled = isEnabled;
+    public Transition(Builder builder) {
+        this.originScene = builder.originScene;
+        this.targetScene = builder.targetScene;
+        this.sceneDescription = builder.sceneDescription;
+        this.choiceDescription = builder.choiceDescription;
+        this.requiredItems = builder.requiredItems;
+        this.consumesRequiredItems = builder.consumesRequiredItems;
+        this.owner = builder.owner;
+        this.enabledTransitions = builder.enabledTransitions;
+        this.enabledBy = builder.enabledBy;
+        this.disabledTransitions = builder.disabledTransitions;
+        this.disabledBy = builder.disabledBy;
+        this.isEnabled = builder.isEnabled;
+    }
+
+    public static class Builder {
+        private Scene originScene;
+        private Scene targetScene;
+        private String sceneDescription;
+        private String choiceDescription;
+        private List<Item> requiredItems;
+        private Boolean consumesRequiredItems;
+        private Item owner;
+        private List<Transition> enabledTransitions;
+        private List<Transition> enabledBy;
+        private List<Transition> disabledTransitions;
+        private List<Transition> disabledBy;
+        private Boolean isEnabled;
+
+        public Builder originScene(Scene originScene) {
+            this.originScene = originScene;
+            return this;
+        }
+
+        public Builder targetScene(Scene targetScene) {
+            this.targetScene = targetScene;
+            return this;
+        }
+
+        public Builder sceneDescription(String sceneDescription) {
+            this.sceneDescription = sceneDescription;
+            return this;
+        }
+
+        public Builder choiceDescription(String choiceDescription) {
+            this.choiceDescription = choiceDescription;
+            return this;
+        }
+
+        public Builder requiredItems(List<Item> requiredItems) {
+            this.requiredItems = requiredItems;
+            return this;
+        }
+
+        public Builder consumesRequiredItems(Boolean consumesRequiredItems) {
+            this.consumesRequiredItems = consumesRequiredItems != null ? consumesRequiredItems : false;
+            return this;
+        }
+
+        public Builder owner(Item owner) {
+            this.owner = owner;
+            return this;
+        }
+
+        public Builder enabledTransitions(List<Transition> enabledTransitions) {
+            if(this.enabledTransitions == null) {
+                this.enabledTransitions = new ArrayList<>();
+            }
+            this.enabledTransitions.addAll(enabledTransitions);
+            return this;
+        }
+
+        public Builder enabledBy(List<Transition> enabledBy) {
+            if(this.enabledBy == null) {
+                this.enabledBy = new ArrayList<>();
+            }
+            this.enabledBy.addAll(enabledBy);
+            return this;
+        }
+
+        public Builder disabledTransitions(List<Transition> disabledTransitions) {
+            if(this.disabledTransitions == null) {
+                this.disabledTransitions = new ArrayList<>();
+            }
+            this.disabledTransitions.addAll(disabledTransitions);
+            return this;
+        }
+
+        public Builder disabledBy(List<Transition> disabledBy) {
+            if(this.disabledBy == null) {
+                this.disabledBy = new ArrayList<>();
+            }
+            this.disabledBy.addAll(disabledBy);
+            return this;
+        }
+
+        public Builder isEnabled(Boolean isEnabled) {
+            this.isEnabled = isEnabled;
+            return this;
+        }
+
+        public Transition build() {
+            return new Transition(this);
+        }
     }
 
     public Long getId() {
