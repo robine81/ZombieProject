@@ -3,6 +3,8 @@ package com.lexicon.ZombieProject.service;
 import com.lexicon.ZombieProject.entity.Scene;
 import com.lexicon.ZombieProject.entity.Transition;
 import com.lexicon.ZombieProject.entity.dto.SceneInterfaceDTO;
+import com.lexicon.ZombieProject.exception.ResourceNotFoundException;
+import com.lexicon.ZombieProject.repository.SceneRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -13,22 +15,22 @@ public class GameService {
     private final Long startSceneId = 1L;
     private Scene currentScene;
 
-    /*
     private final SceneRepository sceneRepository;
 
     public GameService(SceneRepository sceneRepository){
         this.sceneRepository = sceneRepository;
-        startingScene = sceneRepository.findById(startingSceneId)
-            .orElseThrow(() -> new ResourceNotFoundException("Couldn't find start scene"));
     }
-     */
 
     public SceneInterfaceDTO getCurrentScene(){
+        if (currentScene == null){
+            currentScene = sceneRepository.findById(startSceneId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Couldn't find start scene"));
+        }
         return sceneToDto(currentScene);
     }
 
     public SceneInterfaceDTO executeTransition(int optionIndex){
-        Transition chosenTransition = currentScene.getOutgoingTransitions().get(optionIndex);
+        Transition chosenTransition = currentScene.getOutgoingTransitions().get(optionIndex - 1);
         chosenTransition.execute();
         currentScene = chosenTransition.getTargetScene();
         return sceneToDto(currentScene);
