@@ -6,6 +6,9 @@
 
 In order to run the project, create a local .env file containing \${DB_NAME}, \${DB_PASS}, \${DB_USERNAME} of local MySQL DB running in container.
 
+Build and run the project:
+- docker compose up --build
+
 Class diagram:  
 ![Class diagram](DesignDocuments/screenshots/ClassDiagram.png)
 
