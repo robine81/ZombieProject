@@ -23,7 +23,7 @@ public class TransitionService {
     }
 
     public TransitionDTO getTransitionByName(String transitionName) {
-        return mapper.toTransitionDTO(repository.findByTranistionName(transitionName));
+        return mapper.toTransitionDTO(repository.findByTransitionName(transitionName));
     }
 
     public Boolean existsByTransitionName(String transitionName) {
