@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SceneService {
@@ -29,13 +30,13 @@ public class SceneService {
         return sceneDTOS;
     }
 
-    public SceneDTO getScene(Long id){
+    public SceneDTO getSceneById(Long id){
         Scene scene = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Scene not found with id: " + id));
         return mapper.toSceneDTO(scene);
     }
 
-    public SceneDTO createScene(SceneDTO sceneDTO){
+    public SceneDTO create(SceneDTO sceneDTO){
         if(repository.existsById(sceneDTO.getId())){
             throw new ResourceAlreadyExistsException("Scene " +
                     sceneDTO.getSceneName() +
@@ -44,20 +45,23 @@ public class SceneService {
         return mapper.toSceneDTO(repository.save(mapper.toSceneEntity(sceneDTO)));
     }
 
-    public SceneDTO updateScene(Long id, SceneDTO sceneDTO){
-        Scene existingScene = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Scene not found with id: " + id));
-        existingScene.setSceneName(sceneDTO.getSceneName());
-        existingScene.setDescription(sceneDTO.getDescription());
-        existingScene.setItems(sceneDTO.getItems());
-
-        return  mapper.toSceneDTO(repository.save(existingScene));
+    public Optional<SceneDTO> update(Long id, SceneDTO sceneDTO){
+        return repository.findById(id)
+                .map(scene -> {
+                    scene.setSceneName(sceneDTO.getSceneName());
+                    scene.setDescription(sceneDTO.getDescription());
+                    scene.setItems(sceneDTO.getItems());
+                    Scene updated = repository.save(scene);
+                    return mapper.toSceneDTO(updated);
+                });
     }
 
-    public void deleteScene(Long id){
+    public void delete(Long id){
         if(!repository.existsById(id)){
             throw new RuntimeException("Scene not found with id: " + id);
         }
         repository.deleteById(id);
     }
+
+    public boolean nameExists(String sceneName){ return repository.existsBySceneName(sceneName); }
 }
