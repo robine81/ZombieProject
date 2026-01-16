@@ -16,6 +16,9 @@ public class Item {
     @JoinColumn(name = "transition_id")
     private Transition transition;
 
+    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
+    private InventoryEntry inventoryEntry;
+
     @ManyToOne
     @JoinColumn(name = "scene_id")
     private Scene scene;
