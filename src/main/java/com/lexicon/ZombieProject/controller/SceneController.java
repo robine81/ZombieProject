@@ -32,7 +32,7 @@ public class SceneController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SceneDTO> getSceneById(@PathVariable Long id) {
-        SceneDTO sceneDTO = service.getScene(id);
+        SceneDTO sceneDTO = service.getSceneById(id);
         return ResponseEntity.ok(sceneDTO);
     }
 
