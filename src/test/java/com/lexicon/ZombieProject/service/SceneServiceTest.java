@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -70,6 +71,12 @@ public class SceneServiceTest {
         sceneDTO2.setSceneName("EndScene");
         sceneDTO2.setDescription("You find yourself at the end");
         sceneDTO2.setItems(new ArrayList<>());
+    }
+
+    @Test
+    @DisplayName("getId returns true only if id exists")
+    public void testSceneExistsReturnTrue(Long id){
+       // Mockito.when(repository.getSceneById(id).thenRet;
     }
 
     @Test

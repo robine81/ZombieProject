@@ -30,7 +30,7 @@ public class SceneService {
         return sceneDTOS;
     }
 
-    public SceneDTO getScene(Long id){
+    public SceneDTO getSceneById(Long id){
         Scene scene = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Scene not found with id: " + id));
         return mapper.toSceneDTO(scene);
