@@ -21,7 +21,7 @@ public class TransitionDTO {
     private List<Transition> disabledTransitions;
     private List<Transition> disabledBy;
     private Boolean isEnabled;
-    private String transitionName;
+    private String name;
 
     public TransitionDTO() {}
 
@@ -39,7 +39,7 @@ public class TransitionDTO {
         this.disabledTransitions = builder.disabledTransitions;
         this.disabledBy = builder.disabledBy;
         this.isEnabled = builder.isEnabled;
-        this.transitionName = builder.transitionName;
+        this.name = builder.name;
     }
 
     public static class Builder {
@@ -56,7 +56,7 @@ public class TransitionDTO {
         private List<Transition> disabledTransitions;
         private List<Transition> disabledBy;
         private Boolean isEnabled;
-        private String transitionName;
+        private String name;
 
         public Builder id(Long id) {
             this.id = id;
@@ -136,7 +136,7 @@ public class TransitionDTO {
         }
 
         public Builder transitionName(String transitionName) {
-            this.transitionName = transitionName;
+            this.name = transitionName;
             return this;
         }
 
@@ -249,12 +249,12 @@ public class TransitionDTO {
         isEnabled = enabled;
     }
 
-    public String getTransitionName () {
-        return transitionName;
+    public String getName () {
+        return name;
     }
 
-    public void setTransitionName (String transitionName) {
-        this.transitionName = transitionName;
+    public void setName (String name) {
+        this.name = name;
     }
 
     @Override

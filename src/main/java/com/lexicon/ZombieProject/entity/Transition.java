@@ -55,7 +55,7 @@ public class Transition {
 
     private Boolean isEnabled;
 
-    private String transitionName;
+    private String name;
 
     public Transition() {
     }
@@ -73,7 +73,7 @@ public class Transition {
         this.disabledTransitions = builder.disabledTransitions;
         this.disabledBy = builder.disabledBy;
         this.isEnabled = builder.isEnabled;
-        this.transitionName = builder.transitionName;
+        this.name = builder.name;
     }
 
     public static class Builder {
@@ -89,7 +89,7 @@ public class Transition {
         private List<Transition> disabledTransitions;
         private List<Transition> disabledBy;
         private Boolean isEnabled;
-        private String transitionName;
+        private String name;
 
         public Builder originScene(Scene originScene) {
             this.originScene = originScene;
@@ -163,8 +163,8 @@ public class Transition {
             return this;
         }
 
-        public Builder transitionName(String transitionName) {
-            this.transitionName = transitionName;
+        public Builder name(String name) {
+            this.name = name;
             return this;
         }
 
@@ -277,12 +277,12 @@ public class Transition {
         isEnabled = enabled;
     }
 
-    public String getTransitionName () {
-        return transitionName;
+    public String getName () {
+        return name;
     }
 
-    public void setTransitionName (String transitionName) {
-        this.transitionName = transitionName;
+    public void setName (String name) {
+        this.name = name;
     }
 
     public void execute(){

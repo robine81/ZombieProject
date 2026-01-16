@@ -3,8 +3,7 @@ package com.lexicon.ZombieProject.controller;
 import com.lexicon.ZombieProject.entity.dto.TransitionDTO;
 import com.lexicon.ZombieProject.exception.ResourceAlreadyExistsException;
 import com.lexicon.ZombieProject.service.TransitionService;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.constraints.Min;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +12,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/transitions")
 public class TransitionController {
-    @Autowired
-    private TransitionService transitionService;
+    private final TransitionService transitionService;
+
+    public TransitionController(TransitionService transitionService) {
+        this.transitionService = transitionService;
+    }
 
     @GetMapping
     public ResponseEntity<List<TransitionDTO>> getAllTransitions() {
@@ -29,8 +31,8 @@ public class TransitionController {
 
     @PostMapping("/create")
     public ResponseEntity<TransitionDTO> createScene(@RequestBody TransitionDTO transitionDTO) {
-        if(transitionService.existsByTransitionName(transitionDTO.getTransitionName())) {
-            throw new ResourceAlreadyExistsException("Transition already exists with name: " + transitionDTO.getTransitionName());
+        if(transitionService.existsByName(transitionDTO.getName())) {
+            throw new ResourceAlreadyExistsException("Transition already exists with getName: " + transitionDTO.getName());
         }
         return ResponseEntity.status(201).body(transitionService.createTransition(transitionDTO));
     }

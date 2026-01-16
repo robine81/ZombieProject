@@ -22,12 +22,12 @@ public class TransitionService {
         return repository.findAll().stream().map(mapper::toTransitionDTO).collect(Collectors.toList());
     }
 
-    public TransitionDTO getTransitionByName(String transitionName) {
-        return mapper.toTransitionDTO(repository.findByTranistionName(transitionName));
+    public TransitionDTO getTransitionByName(String name) {
+        return mapper.toTransitionDTO(repository.findByName(name));
     }
 
-    public Boolean existsByTransitionName(String transitionName) {
-        return repository.existsByTransitionName(transitionName);
+    public Boolean existsByName (String name) {
+        return repository.existsByName(name);
     }
 
     public TransitionDTO getTransitionById(Long id) {
@@ -55,6 +55,7 @@ public class TransitionService {
         transition.setDisabledTransitions(transitionDTO.getDisabledTransitions());
         transition.setDisabledBy(transitionDTO.getDisabledBy());
         transition.setEnabled(transitionDTO.getEnabled());
+        transition.setName(transitionDTO.getName());
 
         return mapper.toTransitionDTO(repository.save(transition));
     }
