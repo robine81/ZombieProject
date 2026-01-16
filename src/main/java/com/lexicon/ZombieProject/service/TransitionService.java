@@ -22,6 +22,14 @@ public class TransitionService {
         return repository.findAll().stream().map(mapper::toTransitionDTO).collect(Collectors.toList());
     }
 
+    public TransitionDTO getTransitionByName(String transitionName) {
+        return mapper.toTransitionDTO(repository.findByTranistionName(transitionName));
+    }
+
+    public Boolean existsByTransitionName(String transitionName) {
+        return repository.existsByTransitionName(transitionName);
+    }
+
     public TransitionDTO getTransitionById(Long id) {
         Transition transition = repository.findById(id).orElseThrow(() -> new RuntimeException("Transation not found with id: " + id));
         return mapper.toTransitionDTO(transition);
@@ -40,7 +48,7 @@ public class TransitionService {
         transition.setSceneDescription(transitionDTO.getSceneDescription());
         transition.setChoiceDescription(transitionDTO.getChoiceDescription());
         transition.setRequiredItems(transitionDTO.getRequiredItems());
-        transition.setConsumesRequiredItems(transitionDTO.getConsumeRequiredItems());
+        transition.setConsumesRequiredItems(transitionDTO.getConsumesRequiredItems());
         transition.setOwner(transitionDTO.getOwner());
         transition.setEnabledTransitions(transitionDTO.getEnabledTransitions());
         transition.setEnabledBy(transitionDTO.getEnabledBy());

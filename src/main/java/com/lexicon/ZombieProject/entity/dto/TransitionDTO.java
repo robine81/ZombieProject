@@ -14,13 +14,14 @@ public class TransitionDTO {
     private String sceneDescription;
     private String choiceDescription;
     private List<Item> requiredItems;
-    private Boolean consumeRequiredItems = false;
+    private Boolean consumesRequiredItems = false;
     private Item owner;
     private List<Transition> enabledTransitions;
     private List<Transition> enabledBy;
     private List<Transition> disabledTransitions;
     private List<Transition> disabledBy;
     private Boolean isEnabled;
+    private String transitionName;
 
     public TransitionDTO() {}
 
@@ -31,13 +32,14 @@ public class TransitionDTO {
         this.sceneDescription = builder.sceneDescription;
         this.choiceDescription = builder.choiceDescription;
         this.requiredItems = builder.requiredItems;
-        this.consumeRequiredItems = builder.consumesRequiredItems;
+        this.consumesRequiredItems = builder.consumesRequiredItems;
         this.owner = builder.owner;
         this.enabledTransitions = builder.enabledTransitions;
         this.enabledBy = builder.enabledBy;
         this.disabledTransitions = builder.disabledTransitions;
         this.disabledBy = builder.disabledBy;
         this.isEnabled = builder.isEnabled;
+        this.transitionName = builder.transitionName;
     }
 
     public static class Builder {
@@ -54,6 +56,7 @@ public class TransitionDTO {
         private List<Transition> disabledTransitions;
         private List<Transition> disabledBy;
         private Boolean isEnabled;
+        private String transitionName;
 
         public Builder id(Long id) {
             this.id = id;
@@ -132,6 +135,11 @@ public class TransitionDTO {
             return this;
         }
 
+        public Builder transitionName(String transitionName) {
+            this.transitionName = transitionName;
+            return this;
+        }
+
         public TransitionDTO build() {
             return new TransitionDTO(this);
         }
@@ -185,12 +193,12 @@ public class TransitionDTO {
         this.requiredItems = requiredItems;
     }
 
-    public Boolean getConsumeRequiredItems () {
-        return consumeRequiredItems;
+    public Boolean getConsumesRequiredItems () {
+        return consumesRequiredItems;
     }
 
-    public void setConsumeRequiredItems (Boolean consumeRequiredItems) {
-        this.consumeRequiredItems = consumeRequiredItems;
+    public void setConsumesRequiredItems (Boolean consumesRequiredItems) {
+        this.consumesRequiredItems = consumesRequiredItems;
     }
 
     public Item getOwner () {
@@ -241,6 +249,14 @@ public class TransitionDTO {
         isEnabled = enabled;
     }
 
+    public String getTransitionName () {
+        return transitionName;
+    }
+
+    public void setTransitionName (String transitionName) {
+        this.transitionName = transitionName;
+    }
+
     @Override
     public String toString () {
         return "TransitionDTO{" +
@@ -250,7 +266,7 @@ public class TransitionDTO {
                 ", sceneDescription='" + sceneDescription + '\'' +
                 ", choiceDescription='" + choiceDescription + '\'' +
                 ", requiredItems=" + requiredItems +
-                ", consumeRequiredItems=" + consumeRequiredItems +
+                ", consumeRequiredItems=" + consumesRequiredItems +
                 ", owner=" + owner +
                 ", enabledTransitions=" + enabledTransitions +
                 ", enabledBy=" + enabledBy +

@@ -5,7 +5,6 @@ import com.lexicon.ZombieProject.entity.dto.TransitionDTO;
 import com.lexicon.ZombieProject.repository.TransitionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.TransactionDefinition;
 
 @Component
 public class TransitionMapper {
@@ -41,7 +40,7 @@ public class TransitionMapper {
                 .sceneDescription(transitionDTO.getSceneDescription())
                 .choiceDescription(transitionDTO.getChoiceDescription())
                 .requiredItems(transitionDTO.getRequiredItems())
-                .consumesRequiredItems(transitionDTO.getConsumeRequiredItems())
+                .consumesRequiredItems(transitionDTO.getConsumesRequiredItems())
                 .owner(transitionDTO.getOwner())
                 .enabledTransitions(transitionDTO.getEnabledTransitions())
                 .enabledBy(transitionDTO.getEnabledBy())
