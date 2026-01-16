@@ -73,11 +73,11 @@ public class SceneServiceTest {
         sceneDTO2.setItems(new ArrayList<>());
     }
 
-    @Test
-    @DisplayName("getId returns true only if id exists")
-    public void testSceneExistsReturnTrue(Long id){
+    //@Test
+    //@DisplayName("getId returns true only if id exists")
+    //public void testSceneExistsReturnTrue(Long id){
        // Mockito.when(repository.getSceneById(id).thenRet;
-    }
+    //}
 
     @Test
     @DisplayName("getAllScenes returns a list of all scenes as a properly formatted dto")
