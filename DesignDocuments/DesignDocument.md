@@ -48,3 +48,12 @@
 - Player / Inventory
   - Has a list of items collected by the player
   - Current node
+
+# Naming conventions for Scenes and Transitions
+- Decide on a good convention for how to name Scenes and Transitions
+  - E.g. Act, Location, Scene structure
+    - A1: garden, kitchen
+    - L1: garden
+      - S1, S2...
+    - L2: kitchen
+      - S1, S2...

@@ -1,66 +1,32 @@
-package com.lexicon.ZombieProject.entity;
+package com.lexicon.ZombieProject.entity.dto;
 
-import jakarta.persistence.*;
+import com.lexicon.ZombieProject.entity.Item;
+import com.lexicon.ZombieProject.entity.Scene;
+import com.lexicon.ZombieProject.entity.Transition;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "transitions")
-public class Transition {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TransitionDTO {
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "origin_scene_id")
     private Scene originScene;
-
-    @ManyToOne
-    @JoinColumn(name = "target_scene_id")
     private Scene targetScene;
-
     private String sceneDescription;
     private String choiceDescription;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "transition_items",
-        joinColumns = @JoinColumn(name = "transition_id"),
-        inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<Item> requiredItems;
-
     private Boolean consumesRequiredItems = false;
-
-    @OneToOne(cascade = CascadeType.ALL)
     private Item owner;
-
-    // Following many-to-many relationships map what transitions are enabled or disabled when executing a given transition
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "transition_enables_transitions",
-        joinColumns = @JoinColumn(name = "owner_transition_id"),
-        inverseJoinColumns = @JoinColumn(name = "affected_transition_id"))
     private List<Transition> enabledTransitions;
-
-    @ManyToMany(mappedBy = "enabledTransitions")
     private List<Transition> enabledBy;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "transition_disables_transitions",
-            joinColumns = @JoinColumn(name = "owner_transition_id"),
-            inverseJoinColumns = @JoinColumn(name = "affected_transition_id"))
     private List<Transition> disabledTransitions;
-
-    @ManyToMany(mappedBy = "disabledTransitions")
     private List<Transition> disabledBy;
-
     private Boolean isEnabled;
-
     private String name;
 
-    public Transition() {
-    }
+    public TransitionDTO() {}
 
-    public Transition(Builder builder) {
+    public TransitionDTO(Builder builder) {
+        this.id = builder.id;
         this.originScene = builder.originScene;
         this.targetScene = builder.targetScene;
         this.sceneDescription = builder.sceneDescription;
@@ -77,6 +43,7 @@ public class Transition {
     }
 
     public static class Builder {
+        private Long id;
         private Scene originScene;
         private Scene targetScene;
         private String sceneDescription;
@@ -90,6 +57,11 @@ public class Transition {
         private List<Transition> disabledBy;
         private Boolean isEnabled;
         private String name;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
 
         public Builder originScene(Scene originScene) {
             this.originScene = originScene;
@@ -163,117 +135,117 @@ public class Transition {
             return this;
         }
 
-        public Builder name(String name) {
-            this.name = name;
+        public Builder transitionName(String transitionName) {
+            this.name = transitionName;
             return this;
         }
 
-        public Transition build() {
-            return new Transition(this);
+        public TransitionDTO build() {
+            return new TransitionDTO(this);
         }
     }
 
-    public Long getId() {
+    public Long getId () {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId (Long id) {
         this.id = id;
     }
 
-    public Scene getOriginScene() {
+    public Scene getOriginScene () {
         return originScene;
     }
 
-    public void setOriginScene(Scene originScene) {
+    public void setOriginScene (Scene originScene) {
         this.originScene = originScene;
     }
 
-    public Scene getTargetScene() {
+    public Scene getTargetScene () {
         return targetScene;
     }
 
-    public void setTargetScene(Scene targetScene) {
+    public void setTargetScene (Scene targetScene) {
         this.targetScene = targetScene;
     }
 
-    public String getSceneDescription() {
+    public String getSceneDescription () {
         return sceneDescription;
     }
 
-    public void setSceneDescription(String sceneDescription) {
+    public void setSceneDescription (String sceneDescription) {
         this.sceneDescription = sceneDescription;
     }
 
-    public String getChoiceDescription() {
+    public String getChoiceDescription () {
         return choiceDescription;
     }
 
-    public void setChoiceDescription(String choiceDescription) {
+    public void setChoiceDescription (String choiceDescription) {
         this.choiceDescription = choiceDescription;
     }
 
-    public List<Item> getRequiredItems() {
+    public List<Item> getRequiredItems () {
         return requiredItems;
     }
 
-    public void setRequiredItems(List<Item> requiredItems) {
+    public void setRequiredItems (List<Item> requiredItems) {
         this.requiredItems = requiredItems;
     }
 
-    public Boolean getConsumesRequiredItems() {
+    public Boolean getConsumesRequiredItems () {
         return consumesRequiredItems;
     }
 
-    public void setConsumesRequiredItems(Boolean consumesRequiredItems) {
+    public void setConsumesRequiredItems (Boolean consumesRequiredItems) {
         this.consumesRequiredItems = consumesRequiredItems;
     }
 
-    public Item getOwner() {
+    public Item getOwner () {
         return owner;
     }
 
-    public void setOwner(Item owner) {
+    public void setOwner (Item owner) {
         this.owner = owner;
     }
 
-    public List<Transition> getEnabledTransitions() {
+    public List<Transition> getEnabledTransitions () {
         return enabledTransitions;
     }
 
-    public void setEnabledTransitions(List<Transition> enabledTransitions) {
+    public void setEnabledTransitions (List<Transition> enabledTransitions) {
         this.enabledTransitions = enabledTransitions;
     }
 
-    public List<Transition> getEnabledBy() {
+    public List<Transition> getEnabledBy () {
         return enabledBy;
     }
 
-    public void setEnabledBy(List<Transition> enabledBy) {
+    public void setEnabledBy (List<Transition> enabledBy) {
         this.enabledBy = enabledBy;
     }
 
-    public List<Transition> getDisabledTransitions() {
+    public List<Transition> getDisabledTransitions () {
         return disabledTransitions;
     }
 
-    public void setDisabledTransitions(List<Transition> disabledTransitions) {
+    public void setDisabledTransitions (List<Transition> disabledTransitions) {
         this.disabledTransitions = disabledTransitions;
     }
 
-    public List<Transition> getDisabledBy() {
+    public List<Transition> getDisabledBy () {
         return disabledBy;
     }
 
-    public void setDisabledBy(List<Transition> disabledBy) {
+    public void setDisabledBy (List<Transition> disabledBy) {
         this.disabledBy = disabledBy;
     }
 
-    public Boolean getEnabled() {
+    public Boolean getEnabled () {
         return isEnabled;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled (Boolean enabled) {
         isEnabled = enabled;
     }
 
@@ -285,13 +257,22 @@ public class Transition {
         this.name = name;
     }
 
-    public void execute(){
-        for (Transition transition : enabledTransitions){
-            transition.setEnabled(true);
-        }
-
-        for (Transition transition : disabledTransitions){
-            transition.setEnabled(false);
-        }
+    @Override
+    public String toString () {
+        return "TransitionDTO{" +
+                "id=" + id +
+                ", originScene=" + originScene +
+                ", targetScene=" + targetScene +
+                ", sceneDescription='" + sceneDescription + '\'' +
+                ", choiceDescription='" + choiceDescription + '\'' +
+                ", requiredItems=" + requiredItems +
+                ", consumeRequiredItems=" + consumesRequiredItems +
+                ", owner=" + owner +
+                ", enabledTransitions=" + enabledTransitions +
+                ", enabledBy=" + enabledBy +
+                ", disabledTransitions=" + disabledTransitions +
+                ", disabledBy=" + disabledBy +
+                ", isEnabled=" + isEnabled +
+                '}';
     }
 }
