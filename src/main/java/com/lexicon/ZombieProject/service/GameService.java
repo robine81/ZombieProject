@@ -5,6 +5,8 @@ import com.lexicon.ZombieProject.entity.Transition;
 import com.lexicon.ZombieProject.entity.dto.SceneInterfaceDTO;
 import com.lexicon.ZombieProject.exception.ResourceNotFoundException;
 import com.lexicon.ZombieProject.repository.SceneRepository;
+import com.lexicon.ZombieProject.service.component.Player;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -12,7 +14,10 @@ import java.util.Map;
 
 @Service
 public class GameService {
-    private final Long startSceneId = 1L;
+
+    @Autowired
+    private Player player;
+
     private Scene currentScene;
 
     private final SceneRepository sceneRepository;
@@ -23,7 +28,7 @@ public class GameService {
 
     public SceneInterfaceDTO getCurrentScene(){
         if (currentScene == null){
-            currentScene = sceneRepository.findById(startSceneId)
+            currentScene = sceneRepository.findById(1L)
                     .orElseThrow(() -> new ResourceNotFoundException("Couldn't find start scene"));
         }
         return sceneToDto(currentScene);
