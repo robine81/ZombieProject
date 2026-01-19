@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 public class ItemMapper {
     private final ItemRepository repository;
 
-    @Autowired
     public ItemMapper(ItemRepository repository) {
         this.repository = repository;
     }
