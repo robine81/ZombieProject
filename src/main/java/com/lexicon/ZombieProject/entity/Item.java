@@ -26,10 +26,12 @@ public class Item {
     public Item() {
     }
 
-    public Item(String name, String description, Transition transition, Scene scene) {
+    public Item(Long id, String name, String description, Transition transition, InventoryEntry inventoryEntry, Scene scene) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.transition = transition;
+        this.inventoryEntry = inventoryEntry;
         this.scene = scene;
     }
 
@@ -63,6 +65,14 @@ public class Item {
 
     public void setTransition(Transition transition) {
         this.transition = transition;
+    }
+
+    public InventoryEntry getInventoryEntry() {
+        return inventoryEntry;
+    }
+
+    public void setInventoryEntry(InventoryEntry inventoryEntry) {
+        this.inventoryEntry = inventoryEntry;
     }
 
     public Scene getScene() {
