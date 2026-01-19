@@ -1,5 +1,6 @@
 package com.lexicon.ZombieProject.service;
 
+import com.lexicon.ZombieProject.entity.Item;
 import com.lexicon.ZombieProject.entity.Scene;
 import com.lexicon.ZombieProject.entity.Transition;
 import com.lexicon.ZombieProject.entity.dto.SceneInterfaceDTO;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class GameService {
@@ -36,8 +39,16 @@ public class GameService {
 
     public SceneInterfaceDTO executeTransition(int optionIndex){
         Transition chosenTransition = currentScene.getOutgoingTransitions().get(optionIndex - 1);
-        chosenTransition.execute();
-        currentScene = chosenTransition.getTargetScene();
+        if (transitionChoosable(chosenTransition)){
+            Item rewardedItem = chosenTransition.execute();
+            if (rewardedItem != null) {
+                player.getInventory().addItem(rewardedItem);
+            }
+            for (Item item : chosenTransition.getRequiredItems()){
+                player.getInventory().consumeItem(item);
+            }
+            currentScene = chosenTransition.getTargetScene();
+        }
         return sceneToDto(currentScene);
     }
 
@@ -54,12 +65,30 @@ public class GameService {
 
         Map<Integer, String> optionsMap = new HashMap<>();
         for (int i = 0; i < scene.getOutgoingTransitions().size(); i++){
-            if(!scene.getOutgoingTransitions().get(i).getEnabled()) continue; //TODO: add item check once inventory is done
-            optionsMap.put(i + 1, scene.getOutgoingTransitions().get(i).getChoiceDescription());
+            if (transitionChoosable(scene.getOutgoingTransitions().get(i))){
+                optionsMap.put(i + 1, scene.getOutgoingTransitions().get(i).getChoiceDescription());
+            }
         }
         dto.setOptions(optionsMap);
 
         return dto;
+    }
+
+    private boolean transitionChoosable(Transition transition) {
+        if (transition.getEnabled()) {
+            if (transition.getRequiredItems().isEmpty()) {
+                return true;
+            } else {
+                List<Item> requiredItems = transition.getRequiredItems();
+                for (Item item : requiredItems){
+                    if (!player.getInventory().hasItem(item)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     protected void setCurrentScene(Scene scene){

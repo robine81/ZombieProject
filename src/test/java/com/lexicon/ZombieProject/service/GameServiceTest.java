@@ -46,6 +46,7 @@ public class GameServiceTest {
         returnTransition.setEnabled(true);
         returnTransition.setEnabledTransitions(new ArrayList<>());
         returnTransition.setDisabledTransitions(new ArrayList<>());
+        returnTransition.setRequiredItems(new ArrayList<>());
 
         Transition transition = new Transition();
         transition.setOriginScene(originScene);
@@ -55,6 +56,7 @@ public class GameServiceTest {
         transition.setEnabled(true);
         transition.setEnabledTransitions(new ArrayList<>());
         transition.setDisabledTransitions(new ArrayList<>());
+        transition.setRequiredItems(new ArrayList<>());
 
         List<Transition> transitions = new ArrayList<>();
         transitions.add(returnTransition);

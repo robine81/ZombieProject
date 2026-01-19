@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class Inventory {
@@ -27,5 +28,25 @@ public class Inventory {
                 .filter((inventoryEntry -> item.equals(inventoryEntry.getItem())
                         && inventoryEntry.getAmount() > 0))
                 .toList().isEmpty();
+    }
+
+    public void addItem(Item item){
+        Optional<InventoryEntry> inventoryEntry = getInventoryEntries().stream()
+                .filter(entry -> item.equals(entry.getItem()))
+                .findFirst();
+        if(inventoryEntry.isPresent()){
+            inventoryEntry.get().incrementAmount();
+        } else {
+            inventoryEntries.add(repository.save(new InventoryEntry(item, 1)));
+        }
+    }
+
+    public void consumeItem(Item item){
+        Optional<InventoryEntry> inventoryEntry = getInventoryEntries().stream()
+                .filter(entry -> item.equals(entry.getItem()))
+                .findFirst();
+        if(inventoryEntry.isPresent() && inventoryEntry.get().getAmount() > 0) {
+            inventoryEntry.get().decrementAmount();
+        }
     }
 }

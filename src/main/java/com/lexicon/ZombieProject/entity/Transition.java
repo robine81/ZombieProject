@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "transitions")
@@ -285,7 +286,7 @@ public class Transition {
         this.name = name;
     }
 
-    public void execute(){
+    public Item execute(){
         for (Transition transition : enabledTransitions){
             transition.setEnabled(true);
         }
@@ -293,5 +294,7 @@ public class Transition {
         for (Transition transition : disabledTransitions){
             transition.setEnabled(false);
         }
+
+        return owner;
     }
 }
