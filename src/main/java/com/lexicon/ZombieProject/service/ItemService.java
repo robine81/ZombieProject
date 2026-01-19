@@ -65,7 +65,7 @@ public class ItemService {
     }
 
     public void delete(Long id){
-        if(repository.existsById(id)){
+        if(!repository.existsById(id)){
             throw new RuntimeException("Scene not found with id: " + id);
         }
         repository.deleteById(id);
