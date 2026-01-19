@@ -4,7 +4,9 @@ import com.lexicon.ZombieProject.entity.Item;
 import com.lexicon.ZombieProject.entity.dto.ItemDTO;
 import com.lexicon.ZombieProject.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ItemMapper {
     private final ItemRepository repository;
 
