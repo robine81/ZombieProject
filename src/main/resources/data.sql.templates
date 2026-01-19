@@ -1,0 +1,47 @@
+-- Add a SCENE
+-- Fill in numbers for Act Location Scene and add a descriptive name after the hyphen (e.g. garden)
+-- Replace "Lorem ipsum" with scene description
+-- IDs are inserted manually so we can reference them in transitions and items
+-- !!!IDs need to be unique across all scenes!!!
+INSERT INTO scenes(id, scenename, description) VALUES
+(1, "A1L1S1-placeholder", "Lorem lorem."),
+(2, "A1L2S1-sample-scene", "Ipsum ipsum."),
+(1, "A1L2S2-example-interactable", "A cracked ipsum.");
+
+-- Add TRANSITION between two scenes
+-- Fill in numbers for Act Location Scene (origin scene followed by target scene) and add a descriptive name after the hyphen
+-- Replace "Lorem ipsum" with the description that will be added to the scene
+-- Replace "Do lorem" with the text that is displayed as the option to the player
+-- IDs are inserted manually so we can reference them in items, transition_items, transition_enables_transitions, and transition_disables_transitions
+-- !!!IDs need to be unique across all transitions!!!
+INSERT INTO transitions(id, name, origin_scene_id, target_scene_id, scenedescription, choicedescription) VALUES
+(1, "A1L1S1-A1L2S1-place-to-scene", 1, 2, "There is ipsum to the south.", "Go to ipsum"),
+(2, "A1L2S1-A1L1S1-scene-to-place", 2, 1, "There is lorem to the north.", "Go to lorem");
+
+-- Set a TRANSITION to enable or disable another transition when traversed
+-- This is done by adding entries to the respective junction tables as shown below
+-- The owner is the transition which when traversed enables or disables the affected transition
+-- This is used for self-disabling transitions as well (see add item)
+-- ENABLE
+INSERT INTO transition_enables_transitions(owner_transition_id, affected_transition_id) VALUES
+(1, 2);
+-- DISABLE
+INSERT INTO transition_disables_transitions(owner_transition_id, affected_transition_id) VALUES
+(2, 1);
+
+-- Add an ITEM to a scene
+-- First we create a barebones transition that is automatically added to the item's scene to allow us to pick it up
+-- Then a line to make the transition disable itself after we've taken the item
+-- !!!As always IDs need to be unique across ALL transitions and items!!!
+INSERT INTO transitions(id, scenedescription, choicedescription) VALUES
+(3, "There is a lorem on the ipsum.", "Take lorem");
+INSERT INTO transition_disables_transitions VALUES (3, 3); -- NOTE: Matches ID of the transition
+INSERT INTO items(id, name, description, transition_id, scene_id) VALUES
+(1, "Lorem", "This lorem looks like it might be useful.", 3, 1);
+
+-- Add a TRANSITION that requires an ITEM
+-- Create the transition as normal, except the scene description should hint at the item needed
+-- Using the transition_items table we instruct which items are needed (more than one can be required for a given transition)
+INSERT INTO transitions(id, name, origin_scene_id, target_scene_id, scenedescription, choicedescription) VALUES
+(4, "A1L2S1-A1L2S2-open-ipsum", 2, 3, "There is a cracked ipsum here that looks like it could be opened if you had a lorem.", "Open ipsum");
+INSERT INTO transition_items(transition_id, item_id) VALUES (4, 1); -- transition 4 requires item 1
