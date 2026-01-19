@@ -3,10 +3,12 @@ package com.lexicon.ZombieProject.service;
 import com.lexicon.ZombieProject.entity.Item;
 import com.lexicon.ZombieProject.entity.dto.ItemDTO;
 import com.lexicon.ZombieProject.repository.ItemRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ItemMapper {
     private final ItemRepository repository;
 
+    @Autowired
     public ItemMapper(ItemRepository repository) {
         this.repository = repository;
     }
