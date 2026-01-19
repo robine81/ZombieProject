@@ -45,7 +45,7 @@ public class ItemController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id)")
+    @DeleteMapping("/{id}")
     public void delete(@Min(value = 1, message = "Enter a non-zero value for id") @PathVariable Long id){
         service.delete(id);
     }
