@@ -246,6 +246,10 @@ public class Transition {
         this.enabledTransitions = enabledTransitions;
     }
 
+    public void addEnabledTransition(Transition transition){
+        enabledTransitions.add(transition);
+    }
+
     public List<Transition> getEnabledBy() {
         return enabledBy;
     }
@@ -260,6 +264,10 @@ public class Transition {
 
     public void setDisabledTransitions(List<Transition> disabledTransitions) {
         this.disabledTransitions = disabledTransitions;
+    }
+
+    public void addDisabledTransition(Transition transition){
+        disabledTransitions.add(transition);
     }
 
     public List<Transition> getDisabledBy() {

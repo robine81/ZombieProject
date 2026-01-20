@@ -84,6 +84,17 @@ public class Scene {
         this.items = items;
     }
 
+    public void addItem(Item item) {
+        if (items == null) {
+            items = new ArrayList<>();
+        }
+        items.add(item);
+    }
+
+    public void removeItem(Item item) {
+        items.remove(item);
+    }
+
     private List<Transition> getTransitionsFromItems(){
         List<Transition> itemTransitions = new ArrayList<>();
         if (items != null) {
