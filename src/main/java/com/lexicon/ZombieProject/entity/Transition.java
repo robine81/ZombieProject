@@ -82,13 +82,13 @@ public class Transition {
         private Scene targetScene;
         private String sceneDescription;
         private String choiceDescription;
-        private List<Item> requiredItems;
+        private List<Item> requiredItems = new ArrayList<>();
         private Boolean consumesRequiredItems;
         private Item owner;
-        private List<Transition> enabledTransitions;
-        private List<Transition> enabledBy;
-        private List<Transition> disabledTransitions;
-        private List<Transition> disabledBy;
+        private List<Transition> enabledTransitions = new ArrayList<>();
+        private List<Transition> enabledBy = new ArrayList<>();
+        private List<Transition> disabledTransitions = new ArrayList<>();
+        private List<Transition> disabledBy = new ArrayList<>();
         private Boolean isEnabled;
         private String name;
 
@@ -287,14 +287,16 @@ public class Transition {
     }
 
     public Item execute(){
-        for (Transition transition : enabledTransitions){
-            transition.setEnabled(true);
+        if (enabledTransitions != null) {
+            for (Transition transition : enabledTransitions){
+                transition.setEnabled(true);
+            }
         }
-
-        for (Transition transition : disabledTransitions){
-            transition.setEnabled(false);
+        if (disabledTransitions != null) {
+            for (Transition transition : disabledTransitions){
+                transition.setEnabled(false);
+            }
         }
-
         return owner;
     }
 }
