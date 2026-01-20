@@ -54,39 +54,42 @@ public class GameService {
 
     private SceneInterfaceDTO sceneToDto(Scene scene){
         SceneInterfaceDTO dto = new SceneInterfaceDTO();
+        dto.setDescription(buildSceneDescription(scene));
+        dto.setOptions(getOptionsMap(scene));
+        return dto;
+    }
 
+    private String buildSceneDescription(Scene scene){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(scene.getDescription()).append("\n\n");
         for(Transition transition : scene.getAllTransitions()){
             if (!transition.getEnabled()) continue;
             stringBuilder.append(transition.getSceneDescription()).append("\n\n");
         }
-        dto.setDescription(stringBuilder.toString());
+        return stringBuilder.toString();
+    }
 
+    private Map<Integer, String> getOptionsMap(Scene scene){
         Map<Integer, String> optionsMap = new HashMap<>();
         for (int i = 0; i < scene.getAllTransitions().size(); i++){
             if (transitionChoosable(scene.getAllTransitions().get(i))){
                 optionsMap.put(i + 1, scene.getAllTransitions().get(i).getChoiceDescription());
             }
         }
-        dto.setOptions(optionsMap);
-
-        return dto;
+        return optionsMap;
     }
 
     private boolean transitionChoosable(Transition transition) {
         if (transition.getEnabled()) {
-            if (transition.getRequiredItems().isEmpty()) {
-                return true;
-            } else {
+            if (!transition.getRequiredItems().isEmpty()) {
                 List<Item> requiredItems = transition.getRequiredItems();
-                for (Item item : requiredItems){
+                for (Item item : requiredItems) {
                     if (!player.getInventory().hasItem(item)) {
                         return false;
                     }
                 }
-                return true;
             }
+            return true;
         }
         return false;
     }
