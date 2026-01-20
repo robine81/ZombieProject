@@ -46,7 +46,8 @@ public class ItemController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@Min(value = 1, message = "Enter a non-zero value for id") @PathVariable Long id){
+    public ResponseEntity<Void> delete(@Min(value = 1, message = "Enter a non-zero value for id") @PathVariable Long id){
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

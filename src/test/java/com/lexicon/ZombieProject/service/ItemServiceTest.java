@@ -4,6 +4,7 @@ import com.lexicon.ZombieProject.entity.Item;
 import com.lexicon.ZombieProject.entity.Scene;
 import com.lexicon.ZombieProject.entity.dto.ItemDTO;
 import com.lexicon.ZombieProject.repository.ItemRepository;
+import com.lexicon.ZombieProject.repository.SceneRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,9 @@ public class ItemServiceTest {
     @Mock
     private ItemMapper mapper;
 
+    @Mock
+    private SceneRepository sceneRepository;
+
     @InjectMocks
     private ItemService service;
 
@@ -47,12 +51,14 @@ public class ItemServiceTest {
         testItem.setDescription("A battery-powered flashlight");
         testItem.setScene(testScene);
 
-        testItemDTO = new ItemDTO(1L,
+        testItemDTO = new ItemDTO(
+                1L,
                 "Flashlight",
                 "A battery-powered flashlight",
                 null,
                 null,
-                testScene
+                1L,
+                "TestScene"
         );
     }
 
@@ -60,7 +66,12 @@ public class ItemServiceTest {
     @DisplayName("Should return created Item DTO")
     void create_ShouldReturnCreatedItemDTO(){
         //Arrange
-        when(mapper.toItemEntity(testItemDTO)).thenReturn(testItem);
+        Item itemToSave = new Item();
+        itemToSave.setName("Flashlight");
+        itemToSave.setDescription("A battery-powered flashlight");
+
+        when(mapper.toItemEntity(testItemDTO)).thenReturn(itemToSave);
+        when(sceneRepository.findById(1L)).thenReturn(Optional.of(testScene));
         when(repository.save(any(Item.class))).thenReturn(testItem);
         when(mapper.toItemDTO(testItem)).thenReturn(testItemDTO);
 
@@ -70,7 +81,10 @@ public class ItemServiceTest {
         //Assert
         assertNotNull(result);
         assertEquals("Flashlight", result.getName());
+        verify(mapper, times(1)).toItemEntity(testItemDTO);
+        verify(sceneRepository, times(1)).findById(1L);
         verify(repository, times(1)).save(any(Item.class));
+        verify(mapper, times(1)).toItemDTO(testItem);
     }
 
     @Test
@@ -82,7 +96,7 @@ public class ItemServiceTest {
         item2.setName("Key");
         item2.setDescription("Rusty key");
 
-        ItemDTO itemDTO2 = new ItemDTO(2L, "Key", "Rusty key", null, null, null);
+        ItemDTO itemDTO2 = new ItemDTO(2L, "Key", "Rusty key", null, null, null, null);
 
         List<Item> items = Arrays.asList(testItem, item2);
         when(repository.findAll()).thenReturn(items);
@@ -105,7 +119,7 @@ public class ItemServiceTest {
     @DisplayName("Should return updated itemDTO when item exists")
     void update_ShouldReturnUpdatedItemDTO_WhenItemExists() {
         //Arrange
-        ItemDTO updateDTO = new ItemDTO(null, "Updated Flashlight", "New description", null, null, testScene);
+        ItemDTO updateDTO = new ItemDTO(null, "Updated Flashlight", "New description", null, null, 1L, "TestScene");
         Item updatedItem = new Item();
         updatedItem.setId(1L);
         updatedItem.setName("Updated Flashlight");
@@ -114,7 +128,7 @@ public class ItemServiceTest {
         when(repository.findById(1L)).thenReturn(Optional.of(testItem));
         when(repository.save(any(Item.class))).thenReturn(updatedItem);
         when(mapper.toItemDTO(updatedItem)).thenReturn(
-                new ItemDTO(1L, "Updated Flashlight", "New description", null, null, testScene)
+                new ItemDTO(1L, "Updated Flashlight", "New description", null, null, 1L, "TestScene")
         );
 
         //Act
@@ -178,7 +192,7 @@ public class ItemServiceTest {
     @DisplayName("updateItem successfully updates existing item")
     void updateItem_UpdatesItem_WhenItemExists() {
         // Arrange
-        ItemDTO updateDTO = new ItemDTO(null, "Updated Flashlight", "New description", null, null, testScene);
+        ItemDTO updateDTO = new ItemDTO(null, "Updated Flashlight", "New description", null, null, 1L, "TestScene");
 
         Item updatedItem = new Item();
         updatedItem.setId(1L);
@@ -186,14 +200,14 @@ public class ItemServiceTest {
         updatedItem.setDescription("New description");
         updatedItem.setScene(testScene);
 
-        ItemDTO updatedDTO = new ItemDTO(1L, "Updated Flashlight", "New description", null, null, testScene);
+        ItemDTO updatedDTO = new ItemDTO(1L, "Updated Flashlight", "New description", null, null, 1L, "TestScene");
 
         when(repository.findById(1L)).thenReturn(Optional.of(testItem));
         when(repository.save(any(Item.class))).thenReturn(updatedItem);
         when(mapper.toItemDTO(updatedItem)).thenReturn(updatedDTO);
 
         // Act
-        Optional<ItemDTO> result = service.update(1L, updateDTO);
+        Optional<ItemDTO> result = service.update(1L, updatedDTO);
 
         // Assert
         assertTrue(result.isPresent());
@@ -208,7 +222,7 @@ public class ItemServiceTest {
     @DisplayName("updateItem returns empty Optional when item not found")
     void updateItem_ReturnsEmpty_WhenItemNotFound() {
         // Arrange
-        ItemDTO updateDTO = new ItemDTO(null, "Updated", "Description", null, null, null);
+        ItemDTO updateDTO = new ItemDTO(null, "Updated", "Description", null, null, null, null);
         when(repository.findById(999L)).thenReturn(Optional.empty());
 
         // Act
