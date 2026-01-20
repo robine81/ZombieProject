@@ -18,15 +18,15 @@ import java.util.Optional;
 @Service
 public class GameService {
 
-    @Autowired
-    private Player player;
+    private final Player player;
 
     private Scene currentScene;
 
     private final SceneRepository sceneRepository;
 
-    public GameService(SceneRepository sceneRepository){
+    public GameService(SceneRepository sceneRepository, Player player){
         this.sceneRepository = sceneRepository;
+        this.player = player;
     }
 
     public SceneInterfaceDTO getCurrentScene(){
@@ -54,6 +54,7 @@ public class GameService {
 
     private SceneInterfaceDTO sceneToDto(Scene scene){
         SceneInterfaceDTO dto = new SceneInterfaceDTO();
+        dto.setName(scene.getSceneName());
         dto.setDescription(buildSceneDescription(scene));
         dto.setOptions(getOptionsMap(scene));
         return dto;
@@ -94,7 +95,4 @@ public class GameService {
         return false;
     }
 
-    protected void setCurrentScene(Scene scene){
-        currentScene = scene;
-    }
 }
