@@ -2,6 +2,7 @@ package com.lexicon.ZombieProject.repository;
 
 import com.lexicon.ZombieProject.entity.Item;
 import com.lexicon.ZombieProject.entity.Scene;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,12 +20,9 @@ public class ItemJpaIntegrationTest {
     @Autowired
     private ItemRepository repository;
 
-    @Test
-    @DisplayName("findByName should return item when name exists")
-    void findByName_ShouldReturnNameOfItem(){
-        //arrange
+    @BeforeEach
+    void setup(){
         Item item1 = new Item();
-        Scene scene1 = new Scene();
         item1.setName("Hammer");
         item1.setDescription("A very heavy hammer");
 
@@ -39,6 +37,12 @@ public class ItemJpaIntegrationTest {
         repository.save(item1);
         repository.save(item2);
         repository.save(item3);
+    }
+
+    @Test
+    @DisplayName("findByName should return item when name exists")
+    void findByName_ShouldReturnNameOfItem(){
+        //arrange
 
         //act
         Optional<Item> result = repository.findByName("Hammer");
@@ -53,9 +57,6 @@ public class ItemJpaIntegrationTest {
     @DisplayName("findByName should return empty Optional when name does not exist")
     void findByName_ShouldReturnEmpty_WhenNameDoesNotExist(){
         //arrange
-        Item item1 = new Item();
-        item1.setName("Hammer");
-        repository.save(item1);
 
         //act
         Optional<Item> result = repository.findByName("NonExistent");
@@ -68,10 +69,6 @@ public class ItemJpaIntegrationTest {
     @DisplayName("existsByName Should return true if name exists")
     void existsByName_ShouldReturnTrueIfNameExists(){
         //arrange
-        Item item1  = new Item();
-        item1.setName("Hammer");
-        item1.setDescription("A heavy hammer");
-        repository.save(item1);
 
         //act
         boolean result = repository.existsByName("Hammer");
@@ -84,10 +81,6 @@ public class ItemJpaIntegrationTest {
     @DisplayName("existsByName Should return false if name does not exists")
     void existsByName_ShouldReturnFalseIfNameDoesNotExist(){
         //arrange
-        Item item1  = new Item();
-        item1.setName("Hammer");
-        item1.setDescription("A heavy hammer");
-        repository.save(item1);
 
         //act
         boolean result = repository.existsByName("NonExistent");
@@ -95,7 +88,4 @@ public class ItemJpaIntegrationTest {
         //assert
         assertFalse(result);
     }
-
-
-
 }
