@@ -34,9 +34,11 @@ public class GameServiceTest {
     public void setup(){
         Scene originScene = new Scene();
         originScene.setDescription("You find yourself in a serene orchard. The citrus trees are in bloom. A sweet aroma washes over you.");
+        originScene.setItems(new ArrayList<>());
 
         Scene otherScene = new Scene();
         otherScene.setDescription("The gazebo has eaten you. You are dead.");
+        otherScene.setItems(new ArrayList<>());
 
         Transition returnTransition = new Transition();
         returnTransition.setOriginScene(originScene);

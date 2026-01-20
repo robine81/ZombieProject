@@ -2,6 +2,7 @@ package com.lexicon.ZombieProject.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -83,8 +84,17 @@ public class Scene {
         this.items = items;
     }
 
-    public void getTransitionFromItems(){
+    private List<Transition> getTransitionsFromItems(){
+        List<Transition> itemTransitions = items.stream().map(Item::getTransition).toList();
+        itemTransitions.forEach(transition -> transition.setTargetScene(this));
+        return itemTransitions;
+    }
 
+    public List<Transition> getAllTransitions(){
+        List<Transition> transitions = new ArrayList<>();
+        transitions.addAll(getOutgoingTransitions());
+        transitions.addAll(getTransitionsFromItems());
+        return transitions;
     }
 
     @Override

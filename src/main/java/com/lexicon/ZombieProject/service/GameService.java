@@ -38,7 +38,7 @@ public class GameService {
     }
 
     public SceneInterfaceDTO executeTransition(int optionIndex){
-        Transition chosenTransition = currentScene.getOutgoingTransitions().get(optionIndex - 1);
+        Transition chosenTransition = currentScene.getAllTransitions().get(optionIndex - 1);
         if (transitionChoosable(chosenTransition)){
             Item rewardedItem = chosenTransition.execute();
             if (rewardedItem != null) {
@@ -57,16 +57,16 @@ public class GameService {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(scene.getDescription()).append("\n\n");
-        for(Transition transition : scene.getOutgoingTransitions()){
+        for(Transition transition : scene.getAllTransitions()){
             if (!transition.getEnabled()) continue;
             stringBuilder.append(transition.getSceneDescription()).append("\n\n");
         }
         dto.setDescription(stringBuilder.toString());
 
         Map<Integer, String> optionsMap = new HashMap<>();
-        for (int i = 0; i < scene.getOutgoingTransitions().size(); i++){
-            if (transitionChoosable(scene.getOutgoingTransitions().get(i))){
-                optionsMap.put(i + 1, scene.getOutgoingTransitions().get(i).getChoiceDescription());
+        for (int i = 0; i < scene.getAllTransitions().size(); i++){
+            if (transitionChoosable(scene.getAllTransitions().get(i))){
+                optionsMap.put(i + 1, scene.getAllTransitions().get(i).getChoiceDescription());
             }
         }
         dto.setOptions(optionsMap);
