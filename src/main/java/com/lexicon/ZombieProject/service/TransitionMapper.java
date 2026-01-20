@@ -30,7 +30,7 @@ public class TransitionMapper {
                 .disabledTransitions(transition.getDisabledTransitions())
                 .disabledBy(transition.getDisabledBy())
                 .isEnabled(transition.getEnabled())
-                .transitionName(transition.getName())
+                .name(transition.getName())
                 .build();
     }
 

@@ -135,8 +135,8 @@ public class TransitionDTO {
             return this;
         }
 
-        public Builder transitionName(String transitionName) {
-            this.name = transitionName;
+        public Builder name(String name) {
+            this.name = name;
             return this;
         }
 
