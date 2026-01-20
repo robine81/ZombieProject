@@ -24,16 +24,20 @@ public class Inventory {
     }
 
     public boolean hasItem(Item item){
-        return !getInventoryEntries().stream()
-                .filter((inventoryEntry -> item.equals(inventoryEntry.getItem())
-                        && inventoryEntry.getAmount() > 0))
-                .toList().isEmpty();
+        Optional<InventoryEntry> inventoryEntry = findEntryForItem(item);
+        return inventoryEntry.isPresent() && inventoryEntry.get().getAmount() > 0;
+    }
+
+    public Integer getAmountInInventory(Item item){
+        Optional<InventoryEntry> inventoryEntry = findEntryForItem(item);
+        if (inventoryEntry.isPresent()){
+            return inventoryEntry.get().getAmount();
+        }
+        return 0;
     }
 
     public void addItem(Item item){
-        Optional<InventoryEntry> inventoryEntry = getInventoryEntries().stream()
-                .filter(entry -> item.equals(entry.getItem()))
-                .findFirst();
+        Optional<InventoryEntry> inventoryEntry = findEntryForItem(item);
         if(inventoryEntry.isPresent()){
             inventoryEntry.get().incrementAmount();
         } else {
@@ -42,11 +46,15 @@ public class Inventory {
     }
 
     public void consumeItem(Item item){
-        Optional<InventoryEntry> inventoryEntry = getInventoryEntries().stream()
-                .filter(entry -> item.equals(entry.getItem()))
-                .findFirst();
+        Optional<InventoryEntry> inventoryEntry = findEntryForItem(item);
         if(inventoryEntry.isPresent() && inventoryEntry.get().getAmount() > 0) {
             inventoryEntry.get().decrementAmount();
         }
+    }
+
+    private Optional<InventoryEntry> findEntryForItem(Item item){
+        return getInventoryEntries().stream()
+                .filter(entry -> item.equals(entry.getItem()))
+                .findFirst();
     }
 }
