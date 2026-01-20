@@ -85,14 +85,18 @@ public class Scene {
     }
 
     private List<Transition> getTransitionsFromItems(){
-        List<Transition> itemTransitions = items.stream().map(Item::getTransition).toList();
-        itemTransitions.forEach(transition -> transition.setTargetScene(this));
+        List<Transition> itemTransitions = new ArrayList<>();
+        if (items != null) {
+            itemTransitions = items.stream().map(Item::getTransition).toList();
+            itemTransitions.forEach(transition -> transition.setTargetScene(this));
+        }
         return itemTransitions;
     }
 
     public List<Transition> getAllTransitions(){
         List<Transition> transitions = new ArrayList<>();
-        transitions.addAll(getOutgoingTransitions());
+        if (outgoingTransitions != null)
+            transitions.addAll(getOutgoingTransitions());
         transitions.addAll(getTransitionsFromItems());
         return transitions;
     }
