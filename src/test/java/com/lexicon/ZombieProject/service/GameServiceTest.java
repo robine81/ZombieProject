@@ -10,15 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,38 +32,32 @@ public class GameServiceTest {
     public void setup(){
         Scene originScene = new Scene();
         originScene.setDescription("You find yourself in a serene orchard. The citrus trees are in bloom. A sweet aroma washes over you.");
-        originScene.setItems(new ArrayList<>());
 
         Scene otherScene = new Scene();
         otherScene.setDescription("The gazebo has eaten you. You are dead.");
-        otherScene.setItems(new ArrayList<>());
 
-        Transition returnTransition = new Transition();
-        returnTransition.setOriginScene(originScene);
-        returnTransition.setTargetScene(originScene);
-        returnTransition.setSceneDescription("A branch hangs low, heavy in bloom.");
-        returnTransition.setChoiceDescription("Smell the flowers.");
-        returnTransition.setEnabled(true);
-        returnTransition.setEnabledTransitions(new ArrayList<>());
-        returnTransition.setDisabledTransitions(new ArrayList<>());
-        returnTransition.setRequiredItems(new ArrayList<>());
+        Transition returnTransition = new Transition.Builder()
+                .originScene(originScene)
+                .targetScene(originScene)
+                .sceneDescription("A branch hangs low, heavy in bloom.")
+                .choiceDescription("Smell the flowers.")
+                .isEnabled(true)
+                .build();
 
-        Transition transition = new Transition();
-        transition.setOriginScene(originScene);
-        transition.setTargetScene(otherScene);
-        transition.setSceneDescription("Among the trees you spot a small gazebo offering shade from the sweltering midday sun.");
-        transition.setChoiceDescription("Approach the gazebo.");
-        transition.setEnabled(true);
-        transition.setEnabledTransitions(new ArrayList<>());
-        transition.setDisabledTransitions(new ArrayList<>());
-        transition.setRequiredItems(new ArrayList<>());
+        Transition exitTransition = new Transition.Builder()
+                .originScene(originScene)
+                .targetScene(otherScene)
+                .sceneDescription("Among the trees you spot a small gazebo offering shade from the sweltering midday sun.")
+                .choiceDescription("Approach the gazebo.")
+                .isEnabled(true)
+                .build();
 
-        List<Transition> transitions = new ArrayList<>();
-        transitions.add(returnTransition);
-        transitions.add(transition);
+        List<Transition> originOutgoingTransitions = new ArrayList<>();
+        originOutgoingTransitions.add(returnTransition);
+        originOutgoingTransitions.add(exitTransition);
 
-        originScene.setOutgoingTransitions(transitions);
-        otherScene.setOutgoingTransitions(new ArrayList<>());
+        originScene.setOutgoingTransitions(originOutgoingTransitions);
+        //otherScene.setOutgoingTransitions(new ArrayList<>());
 
         when(repository.findById(1L)).thenReturn(Optional.of(originScene));
         //service.setCurrentScene(originScene);
