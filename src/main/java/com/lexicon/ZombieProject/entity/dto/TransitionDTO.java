@@ -6,6 +6,7 @@ import com.lexicon.ZombieProject.entity.Transition;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TransitionDTO {
     private Long id;
@@ -255,6 +256,18 @@ public class TransitionDTO {
 
     public void setName (String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if ( o == null || getClass() != o.getClass() ) return false;
+        TransitionDTO that = (TransitionDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(originScene, that.originScene) && Objects.equals(targetScene, that.targetScene) && Objects.equals(sceneDescription, that.sceneDescription) && Objects.equals(choiceDescription, that.choiceDescription) && Objects.equals(requiredItems, that.requiredItems) && Objects.equals(consumesRequiredItems, that.consumesRequiredItems) && Objects.equals(owner, that.owner) && Objects.equals(enabledTransitions, that.enabledTransitions) && Objects.equals(enabledBy, that.enabledBy) && Objects.equals(disabledTransitions, that.disabledTransitions) && Objects.equals(disabledBy, that.disabledBy) && Objects.equals(isEnabled, that.isEnabled) && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode () {
+        return Objects.hash(id, originScene, targetScene, sceneDescription, choiceDescription, requiredItems, consumesRequiredItems, owner, enabledTransitions, enabledBy, disabledTransitions, disabledBy, isEnabled, name);
     }
 
     @Override

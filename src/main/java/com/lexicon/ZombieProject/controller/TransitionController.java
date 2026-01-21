@@ -30,7 +30,7 @@ public class TransitionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TransitionDTO> createScene(@RequestBody TransitionDTO transitionDTO) {
+    public ResponseEntity<TransitionDTO> createTransition(@RequestBody TransitionDTO transitionDTO) {
         if(transitionService.existsByName(transitionDTO.getName())) {
             throw new ResourceAlreadyExistsException("Transition already exists with getName: " + transitionDTO.getName());
         }
