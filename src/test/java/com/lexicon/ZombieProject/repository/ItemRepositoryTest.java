@@ -1,7 +1,6 @@
 package com.lexicon.ZombieProject.repository;
 
 import com.lexicon.ZombieProject.entity.Item;
-import com.lexicon.ZombieProject.entity.Scene;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,7 @@ import java.util.Optional;
 //use application-test.properties
 @ActiveProfiles("test")
 @DataJpaTest
-public class ItemJpaIntegrationTest {
+public class ItemRepositoryTest {
 
     @Autowired
     private ItemRepository repository;

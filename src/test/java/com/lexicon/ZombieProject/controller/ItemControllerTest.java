@@ -158,5 +158,4 @@ class ItemControllerTest {
         mockMvc.perform(delete("/item/" + savedItemId))
                 .andExpect(status().isNoContent());
     }
-
 }
