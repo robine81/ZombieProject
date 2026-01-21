@@ -6,6 +6,7 @@ import com.lexicon.ZombieProject.entity.Scene;
 import com.lexicon.ZombieProject.entity.Transition;
 import com.lexicon.ZombieProject.entity.dto.ItemDTO;
 import com.lexicon.ZombieProject.exception.ResourceAlreadyExistsException;
+import com.lexicon.ZombieProject.exception.ResourceNotFoundException;
 import com.lexicon.ZombieProject.repository.InventoryRepository;
 import com.lexicon.ZombieProject.repository.ItemRepository;
 import com.lexicon.ZombieProject.repository.SceneRepository;
@@ -47,7 +48,7 @@ public class ItemService {
 
     public ItemDTO getItemById(Long id){
         Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Item not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + id));
         return mapper.toItemDTO(item);
     }
 
@@ -62,19 +63,19 @@ public class ItemService {
 
         if(itemDTO.getSceneId() != null) {
             Scene scene = sceneRepository.findById(itemDTO.getSceneId())
-                    .orElseThrow(() -> new RuntimeException("Scene not found with id: " + itemDTO.getSceneId()));
+                    .orElseThrow(() -> new ResourceNotFoundException("Scene not found with id: " + itemDTO.getSceneId()));
             item.setScene(scene);
         }
 
         if(itemDTO.getTransitionId() != null) {
             Transition transition =transitionRepository.findById(itemDTO.getTransitionId())
-                    .orElseThrow(() -> new RuntimeException("Transition not found with id: " + itemDTO.getTransitionId()));
+                    .orElseThrow(() -> new ResourceNotFoundException("Transition not found with id: " + itemDTO.getTransitionId()));
             item.setTransition(transition);
         }
 
         if(itemDTO.getInventoryEntryId() != null) {
             InventoryEntry inventoryEntry = inventoryRepository.findById(itemDTO.getInventoryEntryId())
-                    .orElseThrow(() -> new RuntimeException("InventoryEntry not found with id: " + itemDTO.getInventoryEntryId()));
+                    .orElseThrow(() -> new ResourceNotFoundException("InventoryEntry not found with id: " + itemDTO.getInventoryEntryId()));
             item.setInventoryEntry(inventoryEntry);
         }
         Item saved = itemRepository.save(item);
@@ -118,7 +119,7 @@ public class ItemService {
 
     public void delete(Long id){
         if(!itemRepository.existsById(id)){
-            throw new RuntimeException("Scene not found with id: " + id);
+            throw new ResourceNotFoundException("Scene not found with id: " + id);
         }
         itemRepository.deleteById(id);
     }
