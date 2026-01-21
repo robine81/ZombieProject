@@ -1,5 +1,6 @@
 package com.lexicon.ZombieProject.service;
 
+import com.lexicon.ZombieProject.entity.Item;
 import com.lexicon.ZombieProject.entity.Scene;
 import com.lexicon.ZombieProject.entity.Transition;
 import com.lexicon.ZombieProject.entity.dto.SceneInterfaceDTO;
@@ -10,20 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class GameService {
 
-    @Autowired
-    private Player player;
+    private final Player player;
 
     private Scene currentScene;
 
     private final SceneRepository sceneRepository;
 
-    public GameService(SceneRepository sceneRepository){
+    public GameService(SceneRepository sceneRepository, Player player){
         this.sceneRepository = sceneRepository;
+        this.player = player;
     }
 
     public SceneInterfaceDTO getCurrentScene(){
@@ -35,34 +38,61 @@ public class GameService {
     }
 
     public SceneInterfaceDTO executeTransition(int optionIndex){
-        Transition chosenTransition = currentScene.getOutgoingTransitions().get(optionIndex - 1);
-        chosenTransition.execute();
-        currentScene = chosenTransition.getTargetScene();
+        Transition chosenTransition = currentScene.getAllTransitions().get(optionIndex - 1);
+        if (transitionChoosable(chosenTransition)){
+            Item rewardedItem = chosenTransition.execute();
+            if (rewardedItem != null) {
+                player.getInventory().addItem(rewardedItem);
+            }
+            for (Item item : chosenTransition.getRequiredItems()){
+                player.getInventory().consumeItem(item);
+            }
+            currentScene = chosenTransition.getTargetScene();
+        }
         return sceneToDto(currentScene);
     }
 
     private SceneInterfaceDTO sceneToDto(Scene scene){
         SceneInterfaceDTO dto = new SceneInterfaceDTO();
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(scene.getDescription()).append("\n\n");
-        for(Transition transition : scene.getOutgoingTransitions()){
-            if (!transition.getEnabled()) continue;
-            stringBuilder.append(transition.getSceneDescription()).append("\n\n");
-        }
-        dto.setDescription(stringBuilder.toString());
-
-        Map<Integer, String> optionsMap = new HashMap<>();
-        for (int i = 0; i < scene.getOutgoingTransitions().size(); i++){
-            if(!scene.getOutgoingTransitions().get(i).getEnabled()) continue; //TODO: add item check once inventory is done
-            optionsMap.put(i + 1, scene.getOutgoingTransitions().get(i).getChoiceDescription());
-        }
-        dto.setOptions(optionsMap);
-
+        dto.setName(scene.getSceneName());
+        dto.setDescription(buildSceneDescription(scene));
+        dto.setOptions(getOptionsMap(scene));
         return dto;
     }
 
-    protected void setCurrentScene(Scene scene){
-        currentScene = scene;
+    private String buildSceneDescription(Scene scene){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(scene.getDescription()).append("\n\n");
+        for(Transition transition : scene.getAllTransitions()){
+            if (!transition.getEnabled()) continue;
+            stringBuilder.append(transition.getSceneDescription()).append("\n\n");
+        }
+        return stringBuilder.toString();
     }
+
+    private Map<Integer, String> getOptionsMap(Scene scene){
+        Map<Integer, String> optionsMap = new HashMap<>();
+        for (int i = 0; i < scene.getAllTransitions().size(); i++){
+            if (transitionChoosable(scene.getAllTransitions().get(i))){
+                optionsMap.put(i + 1, scene.getAllTransitions().get(i).getChoiceDescription());
+            }
+        }
+        return optionsMap;
+    }
+
+    private boolean transitionChoosable(Transition transition) {
+        if (transition.getEnabled()) {
+            if (!transition.getRequiredItems().isEmpty()) {
+                List<Item> requiredItems = transition.getRequiredItems();
+                for (Item item : requiredItems) {
+                    if (!player.getInventory().hasItem(item)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
 }

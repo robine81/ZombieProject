@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "transitions")
@@ -81,13 +82,13 @@ public class Transition {
         private Scene targetScene;
         private String sceneDescription;
         private String choiceDescription;
-        private List<Item> requiredItems;
+        private List<Item> requiredItems = new ArrayList<>();
         private Boolean consumesRequiredItems;
         private Item owner;
-        private List<Transition> enabledTransitions;
-        private List<Transition> enabledBy;
-        private List<Transition> disabledTransitions;
-        private List<Transition> disabledBy;
+        private List<Transition> enabledTransitions = new ArrayList<>();
+        private List<Transition> enabledBy = new ArrayList<>();
+        private List<Transition> disabledTransitions = new ArrayList<>();
+        private List<Transition> disabledBy = new ArrayList<>();
         private Boolean isEnabled;
         private String name;
 
@@ -245,6 +246,10 @@ public class Transition {
         this.enabledTransitions = enabledTransitions;
     }
 
+    public void addEnabledTransition(Transition transition){
+        enabledTransitions.add(transition);
+    }
+
     public List<Transition> getEnabledBy() {
         return enabledBy;
     }
@@ -259,6 +264,10 @@ public class Transition {
 
     public void setDisabledTransitions(List<Transition> disabledTransitions) {
         this.disabledTransitions = disabledTransitions;
+    }
+
+    public void addDisabledTransition(Transition transition){
+        disabledTransitions.add(transition);
     }
 
     public List<Transition> getDisabledBy() {
@@ -285,13 +294,17 @@ public class Transition {
         this.name = name;
     }
 
-    public void execute(){
-        for (Transition transition : enabledTransitions){
-            transition.setEnabled(true);
+    public Item execute(){
+        if (enabledTransitions != null) {
+            for (Transition transition : enabledTransitions){
+                transition.setEnabled(true);
+            }
         }
-
-        for (Transition transition : disabledTransitions){
-            transition.setEnabled(false);
+        if (disabledTransitions != null) {
+            for (Transition transition : disabledTransitions){
+                transition.setEnabled(false);
+            }
         }
+        return owner;
     }
 }

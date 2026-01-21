@@ -45,4 +45,12 @@ public class InventoryEntry {
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
+
+    public void incrementAmount() {
+        this.amount++;
+    }
+
+    public void decrementAmount() {
+        this.amount--;
+    }
 }
