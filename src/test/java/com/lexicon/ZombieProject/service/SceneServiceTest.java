@@ -41,7 +41,7 @@ public class SceneServiceTest {
     private SceneDTO sceneDTO2;
 
     @BeforeEach
-    public void setup(){
+    void setup(){
         Item item1 = new Item();
         Item item2 = new Item();
         item1.setName("Sword");
