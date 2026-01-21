@@ -18,7 +18,7 @@ public class SceneController {
 
     @PostMapping
     public ResponseEntity<SceneDTO> create(@RequestBody SceneDTO sceneDTO){
-        if(service.nameExists(sceneDTO.getSceneName())){
+        if(service.existsByName(sceneDTO.getSceneName())){
             return ResponseEntity.status(409).build();
         }
         return  ResponseEntity.status(201).body(service.create(sceneDTO));
@@ -44,7 +44,8 @@ public class SceneController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@Min(value = 1, message = "Id needs to be non-zero positive long.") @PathVariable Long id){
+    public ResponseEntity<Void> delete(@Min(value = 1, message = "Enter a non-zero value for id.") @PathVariable Long id){
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

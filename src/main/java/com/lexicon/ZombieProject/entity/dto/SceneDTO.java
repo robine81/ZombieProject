@@ -8,15 +8,13 @@ public class SceneDTO {
     private Long id;
     private String sceneName;
     private String description;
-    private List<Item> items;
 
     public SceneDTO() {}
 
-    public SceneDTO(Long id, String sceneName, String description, List<Item> items) {
+    public SceneDTO(Long id, String sceneName, String description) {
         this.id = id;
         this.sceneName = sceneName;
         this.description = description;
-        this.items = items;
     }
 
     public Long getId() {
@@ -41,23 +39,5 @@ public class SceneDTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
-    @Override
-    public String toString() {
-        return "SceneDTO{" +
-                "id=" + id +
-                ", sceneName='" + sceneName + '\'' +
-                ", description='" + description + '\'' +
-                ", items=" + items +
-                '}';
     }
 }

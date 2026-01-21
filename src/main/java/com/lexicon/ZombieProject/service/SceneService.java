@@ -3,6 +3,7 @@ package com.lexicon.ZombieProject.service;
 import com.lexicon.ZombieProject.entity.Scene;
 import com.lexicon.ZombieProject.entity.dto.SceneDTO;
 import com.lexicon.ZombieProject.exception.ResourceAlreadyExistsException;
+import com.lexicon.ZombieProject.exception.ResourceNotFoundException;
 import com.lexicon.ZombieProject.repository.SceneRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,14 +31,16 @@ public class SceneService {
         return sceneDTOS;
     }
 
+    public boolean existsByName(String sceneName){ return repository.existsBySceneName(sceneName); }
+
     public SceneDTO getSceneById(Long id){
         Scene scene = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Scene not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Scene not found with id: " + id));
         return mapper.toSceneDTO(scene);
     }
 
     public SceneDTO create(SceneDTO sceneDTO){
-        if(repository.existsById(sceneDTO.getId())){
+        if(repository.existsBySceneName(sceneDTO.getSceneName())){
             throw new ResourceAlreadyExistsException("Scene " +
                     sceneDTO.getSceneName() +
                     " already exists");
@@ -50,7 +53,6 @@ public class SceneService {
                 .map(scene -> {
                     scene.setSceneName(sceneDTO.getSceneName());
                     scene.setDescription(sceneDTO.getDescription());
-                    scene.setItems(sceneDTO.getItems());
                     Scene updated = repository.save(scene);
                     return mapper.toSceneDTO(updated);
                 });
@@ -58,10 +60,8 @@ public class SceneService {
 
     public void delete(Long id){
         if(!repository.existsById(id)){
-            throw new RuntimeException("Scene not found with id: " + id);
+            throw new ResourceNotFoundException("Scene not found with id: " + id);
         }
         repository.deleteById(id);
     }
-
-    public boolean nameExists(String sceneName){ return repository.existsBySceneName(sceneName); }
 }
