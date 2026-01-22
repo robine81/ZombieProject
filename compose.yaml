@@ -25,6 +25,7 @@ services:
     build:
       context: .
     restart: unless-stopped
+    container_name: zombie-game-service
     ports:
       - "8080:8080"
 
@@ -43,6 +44,7 @@ services:
 
 networks:
   spring-network:
+    name: spring-network
     driver: bridge
 
 volumes:
