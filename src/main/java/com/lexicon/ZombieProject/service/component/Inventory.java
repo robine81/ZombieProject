@@ -41,7 +41,9 @@ public class Inventory {
         if(inventoryEntry.isPresent()){
             inventoryEntry.get().incrementAmount();
         } else {
-            inventoryEntries.add(repository.save(new InventoryEntry(item, 1)));
+            InventoryEntry newEntry = new InventoryEntry(item, 1);
+            repository.save(newEntry);
+            inventoryEntries.add(newEntry);
         }
     }
 
@@ -54,7 +56,7 @@ public class Inventory {
 
     private Optional<InventoryEntry> findEntryForItem(Item item){
         return getInventoryEntries().stream()
-                .filter(entry -> item.equals(entry.getItem()))
+                .filter(entry -> item.getId().equals(entry.getItem().getId()))
                 .findFirst();
     }
 }
