@@ -91,6 +91,7 @@ public class GameServiceTest {
         itemTransition.addDisabledTransition(itemTransition);
 
         item = new Item();
+        item.setId(1L);
         item.setName("Peach");
         item.setDescription("Perfectly ripe, cool to the touch, gives off a sweet smell.");
         item.setTransition(itemTransition);

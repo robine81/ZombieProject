@@ -56,7 +56,11 @@ public class Inventory {
 
     private Optional<InventoryEntry> findEntryForItem(Item item){
         return getInventoryEntries().stream()
-                .filter(entry -> item.getId().equals(entry.getItem().getId()))
+                .filter(entry -> {
+                    if (entry.getItem().getId() != null && item.getId() != null)
+                        return item.getId().equals(entry.getItem().getId());
+                    return false;
+                })
                 .findFirst();
     }
 }
