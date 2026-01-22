@@ -52,6 +52,14 @@ public class GameService {
         return sceneToDto(currentScene);
     }
 
+    public Map<String, Integer> getInventory(){
+        Map<String, Integer> inventoryMap = new HashMap<>();
+        for(InventoryEntry inventoryEntry : player.getInventory().getInventoryEntries()) {
+            inventoryMap.put(inventoryEntry.getItem().getName(), inventoryEntry.getAmount());
+        }
+        return inventoryMap;
+    }
+
     private SceneInterfaceDTO sceneToDto(Scene scene){
         SceneInterfaceDTO dto = new SceneInterfaceDTO();
         dto.setName(scene.getSceneName());
