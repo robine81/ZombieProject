@@ -8,31 +8,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SceneMapper {
-    private final SceneRepository sceneRepository;
 
-    @Autowired
-
-    public SceneMapper(SceneRepository sceneRepository) {
-        this.sceneRepository = sceneRepository;
-    }
+    public SceneMapper() {}
 
     public SceneDTO toSceneDTO(Scene scene) {
-        return new SceneDTO(scene.getId(), scene.getSceneName(), scene.getDescription(), scene.getItems());
+        return new SceneDTO(scene.getId(), scene.getSceneName(), scene.getDescription());
     }
 
     public Scene toSceneEntity(SceneDTO sceneDTO){
         Scene scene = new Scene();
-        scene.setSceneName(scene.getSceneName());
+        scene.setId(sceneDTO.getId());
+        scene.setSceneName(sceneDTO.getSceneName());
         scene.setDescription(sceneDTO.getDescription());
-        scene.setItems(sceneDTO.getItems());
 
         return scene;
     }
-
-    /*public SceneDTO patchScene(Long id, SceneDTO sceneDTO){
-        Scene scene = sceneRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Scene with id: " + id + " not found"));
-
-        if (sceneDTO.getDescription() != null) scene.getDescription(sceneDTO.getDescription());
-    }*/
 }

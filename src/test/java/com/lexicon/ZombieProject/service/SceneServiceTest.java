@@ -3,6 +3,8 @@ package com.lexicon.ZombieProject.service;
 import com.lexicon.ZombieProject.entity.Item;
 import com.lexicon.ZombieProject.entity.Scene;
 import com.lexicon.ZombieProject.entity.dto.SceneDTO;
+import com.lexicon.ZombieProject.exception.ResourceAlreadyExistsException;
+import com.lexicon.ZombieProject.exception.ResourceNotFoundException;
 import com.lexicon.ZombieProject.repository.SceneRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,14 +12,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,10 +39,9 @@ public class SceneServiceTest {
     private Scene scene2;
     private SceneDTO sceneDTO1;
     private SceneDTO sceneDTO2;
-    private List<Item> items;
 
     @BeforeEach
-    public void setup(){
+    void setup(){
         Item item1 = new Item();
         Item item2 = new Item();
         item1.setName("Sword");
@@ -64,24 +66,50 @@ public class SceneServiceTest {
         sceneDTO1.setId(1L);
         sceneDTO1.setSceneName("StartScene");
         sceneDTO1.setDescription("You find yourself at the start");
-        sceneDTO1.setItems(items);
 
         sceneDTO2 = new SceneDTO();
         sceneDTO2.setId(2L);
         sceneDTO2.setSceneName("EndScene");
         sceneDTO2.setDescription("You find yourself at the end");
-        sceneDTO2.setItems(new ArrayList<>());
     }
 
-    //@Test
-    //@DisplayName("getId returns true only if id exists")
-    //public void testSceneExistsReturnTrue(Long id){
-       // Mockito.when(repository.getSceneById(id).thenRet;
-    //}
+    @Test
+    @DisplayName("createScene should return created SceneDTO")
+    void createScene_ShouldReturnCreatedSceneDTO() {
+        //Arrange
+        when(mapper.toSceneEntity(sceneDTO1)).thenReturn(scene1);
+        when(repository.save(any(Scene.class))).thenReturn(scene1);
+        when(mapper.toSceneDTO(scene1)).thenReturn(sceneDTO1);
+
+        //Act
+        SceneDTO result = service.create(sceneDTO1);
+
+        //Assert
+        assertNotNull(result);
+        assertEquals("StartScene", result.getSceneName());
+        verify(repository, times(1)).save(any(Scene.class));
+        verify(mapper, times(1)).toSceneDTO(scene1);
+    }
 
     @Test
-    @DisplayName("getAllScenes returns a list of all scenes as a properly formatted dto")
-    void getAllScenes_ReturnListOfSceneDTOs(){
+    @DisplayName("createScene throws ResourceAlreadyExistsException when scene exists")
+    void createScene_ThrowsResourceAlreadyExistsException_WhenSceneExists() {
+        //Arrange
+        when(repository.existsBySceneName("StartScene")).thenReturn(true);
+
+        //Act & Assert
+        ResourceAlreadyExistsException exception = assertThrows(
+                ResourceAlreadyExistsException.class,
+                () -> service.create(sceneDTO1));
+
+        assertTrue(exception.getMessage().contains("StartScene"));
+        verify(repository, times(1)).existsBySceneName("StartScene");
+        verify(repository, never()).save(any(Scene.class));
+    }
+
+    @Test
+    @DisplayName("Should return list of sceneDTOs as a properly formatted dto")
+    void getAllScenes_ShouldReturnListOfSceneDTOs(){
         //Arrange
         List<Scene> scenes = Arrays.asList(scene1, scene2);
         when(repository.findAll()).thenReturn(scenes);
@@ -119,33 +147,136 @@ public class SceneServiceTest {
     @Test
     @DisplayName("getScene returns SceneDTO when scene exists")
     void getScene_ReturnsSceneDTO_WhenSceneExists() {
+        //Arrange
+        when(repository.findById(1L)).thenReturn(Optional.of(scene1));
+        when(mapper.toSceneDTO(scene1)).thenReturn(sceneDTO1);
+
+        //Act
+        SceneDTO result = service.getSceneById(1L);
+
+        //Assert
+        assertNotNull(result);
+        assertEquals("StartScene", result.getSceneName());
+        assertEquals("You find yourself at the start", result.getDescription());
+        verify(repository, times(1)).findById(1L);
+        verify(mapper, times(1)).toSceneDTO(scene1);
     }
 
     @Test
-    @DisplayName("getScene throws RuntimeException when scene not found")
-    void getScene_ThrowsRuntimeException_WhenSceneNotFound() {}
+    @DisplayName("getScene throws ResourceNotFoundException when scene not found")
+    void getScene_ThrowsResourceNotFoundException_WhenSceneNotFound() {
+        //Arrange
+        when(repository.findById(999L)).thenReturn(Optional.empty());
+
+        //Act & Assert
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
+                () -> service.getSceneById(999L));
+
+        assertEquals("Scene not found with id: 999", exception.getMessage());
+        verify(repository, times(1)).findById(999L);
+        verify(mapper, never()).toSceneDTO(any(Scene.class));
+    }
 
     @Test
-    @DisplayName("createScene successfully creates new scene")
-    void createScene_CreatesNewScene_WhenSceneDoesNotExist() {}
+    @DisplayName("Should return updated sceneDTO when item exists")
+    void update_ShouldReturnUpdatedSceneDTO_WhenSceneExists() {
+        //Arrange
+        SceneDTO updateDTO = new SceneDTO(null, "Updated StartScene", "Updated description");
+        Scene updatedScene = new Scene();
+        updatedScene.setId(1L);
+        updatedScene.setSceneName("Updated StartScene");
+        updatedScene.setDescription("Updated description");
+
+        when(repository.findById(1L)).thenReturn(Optional.of(scene1));
+        when(repository.save(any(Scene.class))).thenReturn(updatedScene);
+        when(mapper.toSceneDTO(updatedScene)).thenReturn(
+                new SceneDTO(1L, "Updated StartScene", "Updated description")
+        );
+
+        //Act
+        Optional<SceneDTO> result = service.update(1L, updateDTO);
+
+        //Assert
+        assertTrue(result.isPresent());
+        assertEquals("Updated StartScene", result.get().getSceneName());
+        assertEquals("Updated description", result.get().getDescription());
+        verify(repository, times(1)).findById(1L);
+        verify(repository, times(1)).save(any(Scene.class));
+        verify(mapper, times(1)).toSceneDTO(updatedScene);
+    }
 
     @Test
-    @DisplayName("createScene throws ResourceAlreadyExistsException when scene exists")
-    void createScene_ThrowsResourceAlreadyExistsException_WhenSceneExists() {}
+    @DisplayName("Should return empty Optional when scene not found")
+    void updateScene_ShouldReturnsEmpty_WhenSceneNotFound() {
+        //Arrange
+        SceneDTO updateDTO = new SceneDTO(null, "Updated", "Description");
+        when(repository.findById(999L)).thenReturn(Optional.empty());
 
-    @Test
-    @DisplayName("updateScene successfully updates existing scene")
-    void updateScene_UpdatesScene_WhenSceneExists() {}
+        //Act
+        Optional<SceneDTO> result = service.update(999L, updateDTO);
 
-    @Test
-    @DisplayName("updateScene throws RuntimeException when scene not found")
-    void updateScene_ThrowsRuntimeException_WhenSceneNotFound() {}
+        //Assert
+        assertFalse(result.isPresent());
+        verify(repository, times(1)).findById(999L);
+        verify(repository, never()).save(any(Scene.class));
+        verify(mapper, never()).toSceneDTO(any(Scene.class));
+    }
 
     @Test
     @DisplayName("deleteScene successfully deletes existing scene")
-    void deleteScene_DeletesScene_WhenSceneExists() {}
+    void deleteScene_DeletesScene_WhenSceneExists() {
+        //Arrange
+        when(repository.existsById(1L)).thenReturn(true);
+        doNothing().when(repository).deleteById(1L);
+
+        //Act
+        service.delete(1L);
+
+        //Assert
+        verify(repository, times(1)).existsById(1L);
+        verify(repository, times(1)).deleteById(1L);
+    }
 
     @Test
-    @DisplayName("deleteScene throws RuntimeException when scene not found")
-    void deleteScene_ThrowsRuntimeException_WhenSceneNotFound() {}
+    @DisplayName("deleteScene throws ResourceNotFoundException when scene not found")
+    void deleteScene_ThrowsResourceNotFoundException_WhenSceneNotFound() {
+        //Arrange
+        when(repository.existsById(999L)).thenReturn(false);
+
+        //Act & Assert
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
+                () -> service.delete(999L));
+
+        assertEquals("Scene not found with id: 999", exception.getMessage());
+        verify(repository, times(1)).existsById(999L);
+        verify(repository, never()).deleteById(anyLong());
+    }
+
+    @Test
+    @DisplayName("nameExists should return true if scene name exists")
+    void nameExists_ShouldReturnTrue_WhenNameExists() {
+        //Arrange
+        when(repository.existsBySceneName("StartScene")).thenReturn(true);
+
+        //Act
+        boolean result = service.existsByName("StartScene");
+
+        //Assert
+        assertTrue(result);
+        verify(repository, times(1)).existsBySceneName("StartScene");
+    }
+
+    @Test
+    @DisplayName("nameExists should return false if scene name does not exist")
+    void nameExists_ShouldReturnFalse_WhenNameDoesNotExist() {
+        //Arrange
+        when(repository.existsBySceneName("NonExistent")).thenReturn(false);
+
+        //Act
+        boolean result = service.existsByName("NonExistent");
+
+        //Assert
+        assertFalse(result);
+        verify(repository, times(1)).existsBySceneName("NonExistent");
+    }
 }
