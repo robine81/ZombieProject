@@ -26,4 +26,9 @@ public class GameController {
     public ResponseEntity<?> selectOption(@PathVariable int optionId){
         return ResponseEntity.ok(service.executeTransition(optionId));
     }
+
+    @GetMapping("/inv")
+    public ResponseEntity<?> getInventory(){
+        return ResponseEntity.ok(service.getInventory());
+    }
 }
