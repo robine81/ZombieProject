@@ -1,10 +1,13 @@
 package com.lexicon.ZombieProject.service;
 
+import com.lexicon.ZombieProject.entity.InventoryEntry;
 import com.lexicon.ZombieProject.entity.Item;
 import com.lexicon.ZombieProject.entity.Scene;
 import com.lexicon.ZombieProject.entity.Transition;
 import com.lexicon.ZombieProject.entity.dto.SceneInterfaceDTO;
+import com.lexicon.ZombieProject.repository.InventoryRepository;
 import com.lexicon.ZombieProject.repository.SceneRepository;
+import com.lexicon.ZombieProject.repository.TransitionRepository;
 import com.lexicon.ZombieProject.service.component.Inventory;
 import com.lexicon.ZombieProject.service.component.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,20 +17,23 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class GameServiceTest {
 
     @Mock
-    SceneRepository repository;
+    SceneRepository sceneRepository;
+
+    @Mock
+    TransitionRepository transitionRepository;
 
     @Mock
     Player player;
@@ -35,15 +41,29 @@ public class GameServiceTest {
     @InjectMocks
     GameService service;
 
+    @Mock
+    InventoryRepository inventoryRepository;
+
+    @InjectMocks
+    Inventory inventory;
+
+    ArrayList<InventoryEntry> entries = new ArrayList<>();
+
+    InventoryEntry entry;
+
+    Scene originScene;
+    Scene otherScene;
     Item item;
 
     @BeforeEach
     public void setup(){
-        Scene originScene = new Scene();
+        originScene = new Scene();
+        originScene.setId(1L);
         originScene.setSceneName("A1L1S1-orchard");
         originScene.setDescription("You find yourself in a serene orchard. The citrus trees are in bloom. A sweet aroma washes over you.");
 
-        Scene otherScene = new Scene();
+        otherScene = new Scene();
+        otherScene.setId(2L);
         otherScene.setSceneName("A1L2S1-gazebo");
         otherScene.setDescription("The gazebo has eaten you. You are dead.");
 
@@ -71,19 +91,36 @@ public class GameServiceTest {
         itemTransition.addDisabledTransition(itemTransition);
 
         item = new Item();
+        item.setId(1L);
         item.setName("Peach");
         item.setDescription("Perfectly ripe, cool to the touch, gives off a sweet smell.");
         item.setTransition(itemTransition);
+        itemTransition.setOwner(item);
+
+        List<Item> requiredItems = new ArrayList<>();
+        requiredItems.add(item);
+        Transition lockedTransition = new Transition.Builder()
+                .originScene(originScene)
+                .targetScene(originScene)
+                .sceneDescription("Your tummy rumbles.")
+                .choiceDescription("Eat the peach the peach.")
+                .requiredItems(requiredItems)
+                .isEnabled(true)
+                .build();
+        itemTransition.addDisabledTransition(itemTransition);
 
 
         List<Transition> originOutgoingTransitions = new ArrayList<>();
         originOutgoingTransitions.add(returnTransition);
         originOutgoingTransitions.add(exitTransition);
+        originOutgoingTransitions.add(lockedTransition);
 
         originScene.setOutgoingTransitions(originOutgoingTransitions);
         originScene.addItem(item);
 
-        when(repository.findById(1L)).thenReturn(Optional.of(originScene));
+        when(sceneRepository.findById(1L)).thenReturn(Optional.of(originScene));
+        when(player.getInventory()).thenReturn(inventory);
+        when(inventoryRepository.findAll()).thenReturn(entries);
     }
 
     @Test
@@ -99,13 +136,15 @@ public class GameServiceTest {
                         
                         Among the trees you spot a small gazebo offering shade from the sweltering midday sun.
                         
+                        Your tummy rumbles.
+                        
                         Nestled in the thick grass is a perfectly ripe and unsullied peach.
                         
                         """,
                 sceneInterfaceDTO.getDescription());
         assertEquals("Smell the flowers.", sceneInterfaceDTO.getOptions().get(1));
         assertEquals("Approach the gazebo.", sceneInterfaceDTO.getOptions().get(2));
-        assertEquals("Take the peach.", sceneInterfaceDTO.getOptions().get(3));
+        assertEquals("Take the peach.", sceneInterfaceDTO.getOptions().get(4));
     }
 
     @Test
@@ -122,6 +161,8 @@ public class GameServiceTest {
     @Test
     @DisplayName("Transition to new scene works")
     void transitionToNewScene(){
+        when(sceneRepository.findById(2L)).thenReturn(Optional.of(otherScene));
+
         SceneInterfaceDTO originScene = service.getCurrentScene();
         SceneInterfaceDTO transitionScene = service.executeTransition(2);
         SceneInterfaceDTO newCurrentScene = service.getCurrentScene();
@@ -136,10 +177,42 @@ public class GameServiceTest {
     @Test
     @DisplayName("Transition added by item returns to scene and disables self")
     void itemTransition(){
+        entry = new InventoryEntry(item, 1);
+        when(inventoryRepository.save(any())).thenReturn(entry);
+
+        SceneInterfaceDTO originScene = service.getCurrentScene();
+        SceneInterfaceDTO transitionScene = service.executeTransition(4);
+
+        assertEquals(originScene.getName(), transitionScene.getName());
+        assertTrue(player.getInventory().hasItem(item));
+        assertFalse(service.getCurrentScene().getOptions().containsKey(4));
+        assertTrue(service.getCurrentScene().getOptions().containsKey(3));
+    }
+
+    @Test
+    @DisplayName("Transition requiring item appears as option if player has item")
+    void lockedTransitionPresent(){
+        entry = new InventoryEntry(item, 1);
+        entries.add(entry);
+        //when(inventoryRepository.save(any())).thenReturn(entry);
+
+        SceneInterfaceDTO originScene = service.getCurrentScene();
+
+        assertTrue(player.getInventory().hasItem(item));
+        assertTrue(service.getCurrentScene().getOptions().containsKey(3));
+    }
+
+    @Test
+    @DisplayName("Transition requiring item consumes item when executed")
+    void lockedTransitionConsumes(){
+        entry = new InventoryEntry(item, 1);
+        entries.add(entry);
+        //when(inventoryRepository.save(any())).thenReturn(entry);
+
         SceneInterfaceDTO originScene = service.getCurrentScene();
         SceneInterfaceDTO transitionScene = service.executeTransition(3);
 
-        assertEquals(originScene.getName(), transitionScene.getName());
-        assertEquals(2, transitionScene.getOptions().size());
+        assertFalse(player.getInventory().hasItem(item));
+        assertFalse(service.getCurrentScene().getOptions().containsKey(3));
     }
 }

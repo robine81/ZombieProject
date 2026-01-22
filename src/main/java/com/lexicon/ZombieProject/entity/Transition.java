@@ -21,10 +21,13 @@ public class Transition {
     @JoinColumn(name = "target_scene_id")
     private Scene targetScene;
 
+    @Column(name = "scene_description")
     private String sceneDescription;
+
+    @Column(name = "choice_description")
     private String choiceDescription;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "transition_items",
         joinColumns = @JoinColumn(name = "transition_id"),
         inverseJoinColumns = @JoinColumn(name = "item_id"))
@@ -32,28 +35,29 @@ public class Transition {
 
     private Boolean consumesRequiredItems = false;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "transition", cascade = CascadeType.ALL)
     private Item owner;
 
     // Following many-to-many relationships map what transitions are enabled or disabled when executing a given transition
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "transition_enables_transitions",
         joinColumns = @JoinColumn(name = "owner_transition_id"),
         inverseJoinColumns = @JoinColumn(name = "affected_transition_id"))
     private List<Transition> enabledTransitions;
 
-    @ManyToMany(mappedBy = "enabledTransitions")
+    @ManyToMany(mappedBy = "enabledTransitions", cascade = CascadeType.ALL)
     private List<Transition> enabledBy;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "transition_disables_transitions",
             joinColumns = @JoinColumn(name = "owner_transition_id"),
             inverseJoinColumns = @JoinColumn(name = "affected_transition_id"))
     private List<Transition> disabledTransitions;
 
-    @ManyToMany(mappedBy = "disabledTransitions")
+    @ManyToMany(mappedBy = "disabledTransitions", cascade = CascadeType.ALL)
     private List<Transition> disabledBy;
 
+    @Column(name = "is_enabled")
     private Boolean isEnabled;
 
     private String name;

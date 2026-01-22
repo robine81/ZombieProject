@@ -1,14 +1,17 @@
 package com.lexicon.ZombieProject.service;
 
+import com.lexicon.ZombieProject.entity.InventoryEntry;
 import com.lexicon.ZombieProject.entity.Item;
 import com.lexicon.ZombieProject.entity.Scene;
 import com.lexicon.ZombieProject.entity.Transition;
 import com.lexicon.ZombieProject.entity.dto.SceneInterfaceDTO;
 import com.lexicon.ZombieProject.exception.ResourceNotFoundException;
 import com.lexicon.ZombieProject.repository.SceneRepository;
+import com.lexicon.ZombieProject.repository.TransitionRepository;
 import com.lexicon.ZombieProject.service.component.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,20 +27,29 @@ public class GameService {
 
     private final SceneRepository sceneRepository;
 
-    public GameService(SceneRepository sceneRepository, Player player){
+    private final TransitionRepository transitionRepository;
+
+    private Long currentSceneId = 1L;
+
+    public GameService(SceneRepository sceneRepository, TransitionRepository transitionRepository, Player player){
         this.sceneRepository = sceneRepository;
+        this.transitionRepository = transitionRepository;
         this.player = player;
     }
 
     public SceneInterfaceDTO getCurrentScene(){
         if (currentScene == null){
-            currentScene = sceneRepository.findById(1L)
+            currentScene = sceneRepository.findById(currentSceneId)
                     .orElseThrow(() -> new ResourceNotFoundException("Couldn't find start scene"));
         }
         return sceneToDto(currentScene);
     }
 
+    @Transactional
     public SceneInterfaceDTO executeTransition(int optionIndex){
+        if (optionIndex > currentScene.getAllTransitions().size()){
+            return sceneToDto(currentScene);
+        }
         Transition chosenTransition = currentScene.getAllTransitions().get(optionIndex - 1);
         if (transitionChoosable(chosenTransition)){
             Item rewardedItem = chosenTransition.execute();
@@ -47,9 +59,21 @@ public class GameService {
             for (Item item : chosenTransition.getRequiredItems()){
                 player.getInventory().consumeItem(item);
             }
-            currentScene = chosenTransition.getTargetScene();
+            transitionRepository.save(chosenTransition);
+            currentSceneId = chosenTransition.getTargetScene().getId();
+            sceneRepository.save(currentScene);
+            currentScene = sceneRepository.findById(currentSceneId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Couldn't find scene with ID = " + currentSceneId));
         }
         return sceneToDto(currentScene);
+    }
+
+    public Map<String, Integer> getInventory(){
+        Map<String, Integer> inventoryMap = new HashMap<>();
+        for(InventoryEntry inventoryEntry : player.getInventory().getInventoryEntries()) {
+            inventoryMap.put(inventoryEntry.getItem().getName(), inventoryEntry.getAmount());
+        }
+        return inventoryMap;
     }
 
     private SceneInterfaceDTO sceneToDto(Scene scene){

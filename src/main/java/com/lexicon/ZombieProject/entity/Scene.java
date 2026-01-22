@@ -18,6 +18,7 @@ public class Scene {
     @OneToMany(mappedBy = "targetScene", cascade = CascadeType.ALL)
     private List<Transition> incomingTransitions;
 
+    @Column(name = "name")
     private String sceneName;
 
     private String description;

@@ -38,12 +38,15 @@ public class InventoryTest {
     void setup(){
         List<InventoryEntry> entries = new ArrayList<>();
         item1 = new Item();
+        item1.setId(1L);
         InventoryEntry ie1 = new InventoryEntry(item1, 1);
         entries.add(ie1);
         item2 = new Item();
+        item2.setId(2L);
         InventoryEntry ie2 = new InventoryEntry(item2, 0);
         entries.add(ie2);
         item3 = new Item();
+        item3.setId(3L);
 
         when(repository.findAll()).thenReturn(entries);
     }
