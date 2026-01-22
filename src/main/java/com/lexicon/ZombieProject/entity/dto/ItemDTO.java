@@ -11,19 +11,21 @@ public class ItemDTO {
     private Long id;
     private String name;
     private String description;
-    private Transition transition;
-    private InventoryEntry inventoryEntry;
-    private Scene scene;
+    private Long transitionId;
+    private Long inventoryEntryId;
+    private Long sceneId;
+    private String sceneName;
 
     public ItemDTO() {}
 
-    public ItemDTO(Long id, String name, String description, Transition transition, InventoryEntry inventoryEntry, Scene scene) {
+    public ItemDTO(Long id, String name, String description, Long transitionId, Long inventoryEntryId, Long sceneId, String sceneName) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.transition = transition;
-        this.inventoryEntry = inventoryEntry;
-        this.scene = scene;
+        this.transitionId = transitionId;
+        this.inventoryEntryId = inventoryEntryId;
+        this.sceneId = sceneId;
+        this.sceneName = sceneName;
     }
 
     public Long getId() {
@@ -42,21 +44,35 @@ public class ItemDTO {
 
     public void setDescription(String description) { this.description = description; }
 
-    public Transition getTransition() { return transition; }
-
-    public void setTransition(Transition transition) { this.transition = transition; }
-
-    public InventoryEntry getInventoryEntry() { return inventoryEntry; }
-
-    public void setInventoryEntry(InventoryEntry inventoryEntry) {
-        this.inventoryEntry = inventoryEntry;
+    public Long getTransitionId() {
+        return transitionId;
     }
 
-    public Scene getScene() {
-        return scene;
+    public void setTransitionId(Long transitionId) {
+        this.transitionId = transitionId;
     }
 
-    public void setScene(Scene scene) {
-        this.scene = scene;
+    public Long getInventoryEntryId() {
+        return inventoryEntryId;
+    }
+
+    public void setInventoryEntryId(Long inventoryEntryId) {
+        this.inventoryEntryId = inventoryEntryId;
+    }
+
+    public Long getSceneId() {
+        return sceneId;
+    }
+
+    public void setSceneId(Long sceneId) {
+        this.sceneId = sceneId;
+    }
+
+    public String getSceneName() {
+        return sceneName;
+    }
+
+    public void setSceneName(String sceneName) {
+        this.sceneName = sceneName;
     }
 }

@@ -1,13 +1,17 @@
 package com.lexicon.ZombieProject.service;
 
+import com.lexicon.ZombieProject.entity.InventoryEntry;
 import com.lexicon.ZombieProject.entity.Item;
+import com.lexicon.ZombieProject.entity.Scene;
+import com.lexicon.ZombieProject.entity.Transition;
 import com.lexicon.ZombieProject.entity.dto.ItemDTO;
 import com.lexicon.ZombieProject.exception.ResourceAlreadyExistsException;
+import com.lexicon.ZombieProject.exception.ResourceNotFoundException;
+import com.lexicon.ZombieProject.repository.InventoryRepository;
 import com.lexicon.ZombieProject.repository.ItemRepository;
-import org.springframework.beans.factory.ObjectProvider;
+import com.lexicon.ZombieProject.repository.SceneRepository;
+import com.lexicon.ZombieProject.repository.TransitionRepository;
 import org.springframework.stereotype.Service;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +20,22 @@ import java.util.Optional;
 @Service
 public class ItemService {
 
-    private final ItemRepository repository;
+    private final ItemRepository itemRepository;
     private final ItemMapper mapper;
+    private final TransitionRepository transitionRepository;
+    private final InventoryRepository inventoryRepository;
+    private final SceneRepository sceneRepository;
 
-    public ItemService(ItemRepository repository, ItemMapper mapper) {
-        this.repository = repository;
+    public ItemService(ItemRepository itemRepository, ItemMapper mapper, TransitionRepository transitionRepository, InventoryRepository inventoryRepository, SceneRepository sceneRepository) {
+        this.itemRepository = itemRepository;
         this.mapper = mapper;
+        this.transitionRepository = transitionRepository;
+        this.inventoryRepository = inventoryRepository;
+        this.sceneRepository = sceneRepository;
     }
 
     public List<ItemDTO> getAllItems(){
-        List<Item> items = repository.findAll();
+        List<Item> items = itemRepository.findAll();
         List<ItemDTO> itemDTOs = new ArrayList<>();
 
         for(Item i : items){
@@ -34,40 +44,83 @@ public class ItemService {
         return itemDTOs;
     }
 
-    public boolean existsByName(String name){ return repository.existsByName(name); }
+    public boolean existsByName(String name){ return itemRepository.existsByName(name); }
 
     public ItemDTO getItemById(Long id){
-        Item item = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Item not found with id: " + id));
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + id));
         return mapper.toItemDTO(item);
     }
 
     public ItemDTO create(ItemDTO itemDTO){
-        if(repository.existsById(itemDTO.getId())){
+        if(itemRepository.existsByName(itemDTO.getName())){
             throw new ResourceAlreadyExistsException("Item " +
                     itemDTO.getName() +
                     " already exists");
         }
-        return mapper.toItemDTO(repository.save(mapper.toItemEntity(itemDTO)));
+
+        Item item = mapper.toItemEntity(itemDTO);
+
+        if(itemDTO.getSceneId() != null) {
+            Scene scene = sceneRepository.findById(itemDTO.getSceneId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Scene not found with id: " + itemDTO.getSceneId()));
+            item.setScene(scene);
+        }
+
+        if(itemDTO.getTransitionId() != null) {
+            Transition transition =transitionRepository.findById(itemDTO.getTransitionId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Transition not found with id: " + itemDTO.getTransitionId()));
+            item.setTransition(transition);
+        }
+
+        if(itemDTO.getInventoryEntryId() != null) {
+            InventoryEntry inventoryEntry = inventoryRepository.findById(itemDTO.getInventoryEntryId())
+                    .orElseThrow(() -> new ResourceNotFoundException("InventoryEntry not found with id: " + itemDTO.getInventoryEntryId()));
+            item.setInventoryEntry(inventoryEntry);
+        }
+        Item saved = itemRepository.save(item);
+        return mapper.toItemDTO(saved);
     }
 
     public Optional<ItemDTO> update(Long id, ItemDTO dto){
-        return repository.findById(id)
+        return itemRepository.findById(id)
                 .map(item -> {
                     item.setName(dto.getName());
                     item.setDescription(dto.getDescription());
-                    item.setTransition(dto.getTransition());
-                    item.setInventoryEntry(dto.getInventoryEntry());
-                    item.setScene(dto.getScene());
-                    Item updated = repository.save(item);
+
+                    if(dto.getTransitionId() != null) {
+                        Transition transition = transitionRepository.findById(dto.getTransitionId())
+                                .orElse(null);
+                        item.setTransition(transition);
+                    } else {
+                        item.setTransition(null);
+                    }
+
+                    if(dto.getInventoryEntryId() != null) {
+                        InventoryEntry inventoryEntry = inventoryRepository.findById(dto.getInventoryEntryId())
+                                .orElse(null);
+                        item.setInventoryEntry(inventoryEntry);
+                    } else {
+                        item.setInventoryEntry(null);
+                    }
+
+                    if(dto.getSceneId() != null) {
+                        Scene scene = sceneRepository.findById(dto.getSceneId())
+                                .orElse(null);
+                        item.setScene(scene);
+                    } else {
+                        item.setScene(null);
+                    }
+
+                    Item updated = itemRepository.save(item);
                     return mapper.toItemDTO(updated);
                 });
     }
 
     public void delete(Long id){
-        if(!repository.existsById(id)){
-            throw new RuntimeException("Scene not found with id: " + id);
+        if(!itemRepository.existsById(id)){
+            throw new ResourceNotFoundException("Scene not found with id: " + id);
         }
-        repository.deleteById(id);
+        itemRepository.deleteById(id);
     }
 }
