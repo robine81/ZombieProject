@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "inventory")
 public class InventoryEntry {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
