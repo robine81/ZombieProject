@@ -100,7 +100,7 @@ public class Scene {
         List<Transition> itemTransitions = new ArrayList<>();
         if (items != null) {
             itemTransitions = items.stream().map(Item::getTransition).toList();
-            itemTransitions.forEach(transition -> transition.setTargetScene(this));
+            itemTransitions.forEach(transition -> {if (transition.getTargetScene() == null) transition.setTargetScene(this);});
         }
         return itemTransitions;
     }
