@@ -31,6 +31,8 @@ public class GameService {
 
     private Long currentSceneId = 1L;
 
+    private final Map<Integer, Integer> optionKeyMap = new HashMap<>();
+
     public GameService(SceneRepository sceneRepository, TransitionRepository transitionRepository, Player player){
         this.sceneRepository = sceneRepository;
         this.transitionRepository = transitionRepository;
@@ -47,10 +49,10 @@ public class GameService {
 
     @Transactional
     public SceneInterfaceDTO executeTransition(int optionIndex){
-        if (optionIndex > currentScene.getAllTransitions().size()){
+        if (!optionKeyMap.containsKey(optionIndex)){
             return sceneToDto(currentScene);
         }
-        Transition chosenTransition = currentScene.getAllTransitions().get(optionIndex - 1);
+        Transition chosenTransition = currentScene.getAllTransitions().get(optionKeyMap.get(optionIndex));
         if (transitionChoosable(chosenTransition)){
             Item rewardedItem = chosenTransition.execute();
             if (rewardedItem != null) {
@@ -96,9 +98,12 @@ public class GameService {
 
     private Map<Integer, String> getOptionsMap(Scene scene){
         Map<Integer, String> optionsMap = new HashMap<>();
+        optionKeyMap.clear();
         for (int i = 0; i < scene.getAllTransitions().size(); i++){
             if (transitionChoosable(scene.getAllTransitions().get(i))){
-                optionsMap.put(i + 1, scene.getAllTransitions().get(i).getChoiceDescription());
+                int key = optionsMap.size() + 1;
+                optionKeyMap.put(key, i);
+                optionsMap.put(key, scene.getAllTransitions().get(i).getChoiceDescription());
             }
         }
         return optionsMap;
@@ -106,7 +111,7 @@ public class GameService {
 
     private boolean transitionChoosable(Transition transition) {
         if (transition.getEnabled()) {
-            if (!transition.getRequiredItems().isEmpty()) {
+            if (transition.getRequiredItems() != null && !transition.getRequiredItems().isEmpty()) {
                 List<Item> requiredItems = transition.getRequiredItems();
                 for (Item item : requiredItems) {
                     if (!player.getInventory().hasItem(item)) {
