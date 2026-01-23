@@ -34,6 +34,8 @@ services:
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASS}
       SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQLDialect
+      stdin_open: true
+      tty: true
 
     depends_on:
       mysql:
