@@ -1,6 +1,7 @@
 package com.lexicon.ZombieProject.entity;
 
 import jakarta.persistence.*;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class Scene {
     @Column(name = "name")
     private String sceneName;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @OneToMany(mappedBy = "scene")
