@@ -33,7 +33,8 @@ public class Transition {
         inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<Item> requiredItems;
 
-    private Boolean consumesRequiredItems = false;
+    @Column(name = "consumes_required_items", columnDefinition = "boolean default true")
+    private Boolean consumesRequiredItems;
 
     @OneToOne(mappedBy = "transition", cascade = CascadeType.ALL)
     private Item owner;
@@ -87,7 +88,7 @@ public class Transition {
         private String sceneDescription;
         private String choiceDescription;
         private List<Item> requiredItems = new ArrayList<>();
-        private Boolean consumesRequiredItems;
+        private Boolean consumesRequiredItems = true;
         private Item owner;
         private List<Transition> enabledTransitions = new ArrayList<>();
         private List<Transition> enabledBy = new ArrayList<>();

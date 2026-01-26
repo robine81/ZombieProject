@@ -58,8 +58,10 @@ public class GameService {
             if (rewardedItem != null) {
                 player.getInventory().addItem(rewardedItem);
             }
-            for (Item item : chosenTransition.getRequiredItems()){
-                player.getInventory().consumeItem(item);
+            if (chosenTransition.getConsumesRequiredItems()) {
+                for (Item item : chosenTransition.getRequiredItems()) {
+                    player.getInventory().consumeItem(item);
+                }
             }
             transitionRepository.save(chosenTransition);
             currentSceneId = chosenTransition.getTargetScene().getId();
