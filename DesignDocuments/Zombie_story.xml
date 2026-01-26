@@ -1,0 +1,220 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.3.4">
+  <diagram name="Page-1" id="LKr4DsighVjtrG6GDCR2">
+    <mxGraphModel dx="3509" dy="1544" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Start" vertex="1">
+          <mxGeometry height="60" width="120" x="340" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-18" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.571;entryY=0.1;entryDx=0;entryDy=0;entryPerimeter=0;" target="oGR8762Wm0Gpd0GgpSyA-4" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="60" as="sourcePoint" />
+            <mxPoint x="400" y="70" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Receptionist (temporary amnesia, don&#39;t remember which key goes where) wake up at desk in library from sirens of police cars. Ambulance has crashed. People on the street don&#39;t see human. Not moving normally. Have to feed cat, but don&#39;t remember where.&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="200" x="300" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-15" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oGR8762Wm0Gpd0GgpSyA-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-26" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oGR8762Wm0Gpd0GgpSyA-25" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-67" connectable="0" parent="oGR8762Wm0Gpd0GgpSyA-26" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="User revolver&amp;nbsp;&lt;div&gt;or axe&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.2878" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-29" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oGR8762Wm0Gpd0GgpSyA-28" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="390" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-73" connectable="0" parent="oGR8762Wm0Gpd0GgpSyA-29" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Go to front door" vertex="1">
+          <mxGeometry relative="1" x="-0.1979" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-38" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="oGR8762Wm0Gpd0GgpSyA-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-66" connectable="0" parent="oGR8762Wm0Gpd0GgpSyA-38" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Go upstairs" vertex="1">
+          <mxGeometry relative="1" x="-0.3597" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-71" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oGR8762Wm0Gpd0GgpSyA-70">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-72" connectable="0" parent="oGR8762Wm0Gpd0GgpSyA-71" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Go to coffee room" vertex="1">
+          <mxGeometry relative="1" x="0.0168" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="1. Reception&lt;div&gt;2. Reception (with keys)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="200" x="280" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="1. Balcony with janitor zombie&lt;div&gt;2. Balcony w memory of home address&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="638" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Archives" vertex="1">
+          <mxGeometry height="60" width="120" x="110" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-19" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="Get lost&lt;div&gt;Drop book&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="90" x="-490" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-40" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="oGR8762Wm0Gpd0GgpSyA-11">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="598" y="680" />
+              <mxPoint x="598" y="480" />
+              <mxPoint x="638" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-68" connectable="0" parent="oGR8762Wm0Gpd0GgpSyA-40" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Pick up keys w&amp;nbsp;&lt;div&gt;manekinekko key chain&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.0449" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-25" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Janitor zombie dead" vertex="1">
+          <mxGeometry height="60" width="130" x="653" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-84" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="oGR8762Wm0Gpd0GgpSyA-86">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570" y="573" />
+              <mxPoint x="570" y="1050" />
+            </Array>
+            <mxPoint x="610" y="1150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-85" connectable="0" parent="oGR8762Wm0Gpd0GgpSyA-84" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Brute force used" vertex="1">
+          <mxGeometry relative="1" x="-0.1661" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-92" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oGR8762Wm0Gpd0GgpSyA-89">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-93" connectable="0" parent="oGR8762Wm0Gpd0GgpSyA-92" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="I remember" vertex="1">
+          <mxGeometry relative="1" x="0.0047" y="4" as="geometry">
+            <mxPoint y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-28" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;1 .Front door no keys -&amp;gt; locked&lt;/span&gt;&lt;/div&gt;&lt;div&gt;2. Front door keys -&amp;gt; brute force&lt;/div&gt;&lt;div&gt;3. Memories restored -&amp;gt; unlocked&lt;/div&gt;" vertex="1">
+          <mxGeometry height="85" width="210" x="270" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-36" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="End game&amp;nbsp;&lt;div&gt;Start journey to&amp;nbsp;&lt;/div&gt;&lt;div&gt;feed the cat&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="160" x="285" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-44" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="&lt;div&gt;Science archive&lt;/div&gt;Zombie" vertex="1">
+          <mxGeometry height="80" width="80" x="294" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-46" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;align=left;" value="1. Entry no keys -&amp;gt; locked&lt;div&gt;2.&amp;nbsp;&amp;nbsp;&lt;div&gt;Entry with keys -&amp;gt; open&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="80" x="294" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-47" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="Empty archive" vertex="1">
+          <mxGeometry height="80" width="80" x="294" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-48" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="Law archive Svensk Lag-book" vertex="1">
+          <mxGeometry height="80" width="80" x="374" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-49" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="&lt;div&gt;Language archive&lt;/div&gt;Lexicon-colletion" vertex="1">
+          <mxGeometry height="80" width="80" x="374" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-50" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="&lt;div&gt;Old editions archive&lt;/div&gt;Zombie" vertex="1">
+          <mxGeometry height="80" width="80" x="454" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-51" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="Empty archive" vertex="1">
+          <mxGeometry height="80" width="80" x="454" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-52" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="Animal archive&lt;div&gt;&amp;nbsp;Cat food, Key memory&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="80" x="454" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-53" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="Cold cases&lt;div&gt;Axe&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="80" x="374" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-54" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" value="Archive floor plan" vertex="1">
+          <mxGeometry height="60" width="120" x="398" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-65" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=-0.012;entryY=0.588;entryDx=0;entryDy=0;entryPerimeter=0;" target="oGR8762Wm0Gpd0GgpSyA-46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-69" connectable="0" parent="oGR8762Wm0Gpd0GgpSyA-65" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Enter" vertex="1">
+          <mxGeometry relative="1" x="0.6137" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-78" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="oGR8762Wm0Gpd0GgpSyA-74">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-79" connectable="0" parent="oGR8762Wm0Gpd0GgpSyA-78" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Go to fridge" vertex="1">
+          <mxGeometry relative="1" x="-0.2405" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-94" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="oGR8762Wm0Gpd0GgpSyA-14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="20" y="500" />
+              <mxPoint x="20" y="860" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-95" connectable="0" parent="oGR8762Wm0Gpd0GgpSyA-94" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Go to" vertex="1">
+          <mxGeometry relative="1" x="0.0054" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-70" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="1. Coffee room&lt;div&gt;2. Coffee room w memory&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="-130" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-76" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-74" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oGR8762Wm0Gpd0GgpSyA-75">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-77" connectable="0" parent="oGR8762Wm0Gpd0GgpSyA-76" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Remember memory" vertex="1">
+          <mxGeometry relative="1" x="-0.1214" y="-3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-74" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Fridge" vertex="1">
+          <mxGeometry height="60" width="120" x="-130" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-80" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-75" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="oGR8762Wm0Gpd0GgpSyA-70">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-190" y="870" />
+              <mxPoint x="-190" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-81" connectable="0" parent="oGR8762Wm0Gpd0GgpSyA-80" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Pick up memory" vertex="1">
+          <mxGeometry relative="1" x="0.1923" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-75" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Cat Memory" vertex="1">
+          <mxGeometry height="60" width="120" x="-130" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-86" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Game over&lt;div&gt;Go outside, meet a zombie/get lost&lt;/div&gt;" vertex="1">
+          <mxGeometry height="99" width="172" x="518" y="1050" as="geometry" />
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-90" edge="1" parent="1" source="oGR8762Wm0Gpd0GgpSyA-89" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oGR8762Wm0Gpd0GgpSyA-36">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="100" y="1110" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oGR8762Wm0Gpd0GgpSyA-89" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;When 3 memories found, unlocked 4th bigger memory&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="40" y="585" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

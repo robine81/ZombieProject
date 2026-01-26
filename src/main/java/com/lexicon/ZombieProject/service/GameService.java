@@ -126,4 +126,14 @@ public class GameService {
         return false;
     }
 
+    @Transactional
+    public SceneInterfaceDTO restartGame() {
+        currentSceneId = 1L;
+        currentScene = sceneRepository.findById(currentSceneId)
+                .orElseThrow(() -> new ResourceNotFoundException("Couldn't find a start scene"));
+
+        player.reset();
+
+        return sceneToDto(currentScene);
+    }
 }

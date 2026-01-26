@@ -11,4 +11,6 @@ public class Player {
     public Inventory getInventory() {
         return inventory;
     }
+
+    public void reset() { inventory.clear(); }
 }
