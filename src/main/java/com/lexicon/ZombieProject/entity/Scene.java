@@ -1,7 +1,6 @@
 package com.lexicon.ZombieProject.entity;
 
 import jakarta.persistence.*;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
