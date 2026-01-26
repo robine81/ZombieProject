@@ -2,7 +2,38 @@
 -- LOCATIONS 1-3 GARDEN BASEMENT SHED
 
 INSERT INTO scenes(id, name, description) VALUES
-(1, "A1L1S0-preamble", "You barely manage to jump the high stone wall as the horde behind you clawed at your feet. The moans of the shambling masses can still be heard faintly but it seems like you've completely managed to avoid their stench."),
+(1, "A1L1S0-preamble", "
+   ____________________________________________________
+  |____________________________________________________|
+  | __     __   ____   ___ ||  ____    ____     _  __  |
+  ||  |__ |--|_| || |_|   |||_|**|*|__|+|+||___| ||  | |
+  ||==|^^||--| |=||=| |=*=||| |~~|~|  |=|=|| | |~||==| |
+  ||  |##||  | | || | |JRO|||-|  | |==|+|+||-|-|~||__| |
+  ||__|__||__|_|_||_|_|___|||_|__|_|__|_|_||_|_|_||__|_|
+  ||_______________________||__________________________|
+  | _____________________  ||      __   __  _  __    _ |
+  ||=|=|=|=|=|=|=|=|=|=|=| __..\\/ |  |_|  ||#||==|  / /|
+  || | | | | | | | | | | |/\\ \\  \\\\|++|=|  || ||==| / / |
+  ||_|_|_|_|_|_|_|_|_|_|_/_/\\_.___\\__|_|__||_||__|/_/__|
+  |____________________ /\\~()/()~//\\ __________________|
+  | __   __    _  _     \\_  (_ .  _/ _    ___     _____|
+  ||~~|_|..|__| || |_ _   \\ //\\\\ /  |=|__|~|~|___| | | |
+  ||--|+|^^|==|1||2| | |__/\\ __ /\\__| |==|x|x|+|+|=|=|=|
+  ||__|_|__|__|_||_|_| /  \\ \\  / /  \\_|__|_|_|_|_|_|_|_|
+  |_________________ _/    \\/\\/\\/    \\_ _______________|
+  | _____   _   __  |/      \\../      \\|  __   __   ___|
+  ||_____|_| |_|##|_||   |   \\/ __|   ||_|==|_|++|_|-|||
+  ||______||=|#|--| |\\   \\   o    /   /| |  |~|  | | |||
+  ||______||_|_|__|_|_\\   \\  o   /   /_|_|__|_|__|_|_|||
+  |_________ __________\\___\\____/___/___________ ______|
+  |__    _  /    ________     ______           /| _ _ _|
+  |\\ \\  |=|/   //    /| //   /  /  / |        / ||%|%|%|
+  | \\/ |*/  .//____//.//   /__/__/ (_)      /  ||=|=|=|
+__|  /|/   /(____|/ //                    /  /||~|~|~|__
+  |___\\_/   /________//   ________         /  / ||_|_|_|
+  |___ /   (|________/   |\\_______       /  /| |______|
+      /                  |________)     /  / | |
+You barely manage to jump the high stone wall as the horde behind you clawed at your feet. The moans of the shambling masses can still be heard faintly but it seems like you've completely managed to avoid their stench."),
 (2, "A1L1S1-garden", "The high stone walls give you an immediate sense of safety as you look out over the garden."),
 (3, "A1L2S1-basement", "You can't see shit."),
 (4, "A1L3S1-shed-initial", "The inside of the shed is a mess of expensive looking tools. Someone must've been rummaging frantically for something. The pile looks unstable, as if it might collapse should you take anything."),

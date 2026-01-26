@@ -21,6 +21,7 @@ public class Scene {
     @Column(name = "name")
     private String sceneName;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @OneToMany(mappedBy = "scene")
