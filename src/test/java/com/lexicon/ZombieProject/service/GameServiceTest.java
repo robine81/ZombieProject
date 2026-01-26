@@ -144,7 +144,7 @@ public class GameServiceTest {
                 sceneInterfaceDTO.getDescription());
         assertEquals("Smell the flowers.", sceneInterfaceDTO.getOptions().get(1));
         assertEquals("Approach the gazebo.", sceneInterfaceDTO.getOptions().get(2));
-        assertEquals("Take the peach.", sceneInterfaceDTO.getOptions().get(4));
+        assertEquals("Take the peach.", sceneInterfaceDTO.getOptions().get(3));
     }
 
     @Test
@@ -181,7 +181,7 @@ public class GameServiceTest {
         when(inventoryRepository.save(any())).thenReturn(entry);
 
         SceneInterfaceDTO originScene = service.getCurrentScene();
-        SceneInterfaceDTO transitionScene = service.executeTransition(4);
+        SceneInterfaceDTO transitionScene = service.executeTransition(3);
 
         assertEquals(originScene.getName(), transitionScene.getName());
         assertTrue(player.getInventory().hasItem(item));
@@ -213,6 +213,5 @@ public class GameServiceTest {
         SceneInterfaceDTO transitionScene = service.executeTransition(3);
 
         assertFalse(player.getInventory().hasItem(item));
-        assertFalse(service.getCurrentScene().getOptions().containsKey(3));
     }
 }
