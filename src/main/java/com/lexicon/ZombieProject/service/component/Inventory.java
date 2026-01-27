@@ -63,4 +63,6 @@ public class Inventory {
                 })
                 .findFirst();
     }
+
+    public void clear() { inventoryEntries.clear(); }
 }
