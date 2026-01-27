@@ -30,7 +30,8 @@ To run both ZombieProject and ZombieProjectInterface containers simultaneously, 
 Do note that this assumes both projects share the same root directory. Adjust the paths to the compose files accordingly.
 #### Build and run the project
 The docker compose up --build command needs to be run twice in order for the DB to be properly set up. 
-    docker compose up --build
+
+    docker compose up --build x2
     docker attach zombie-game-interface
 
 #### In game commands
