@@ -18,10 +18,18 @@ Our project is composed of three services:
 - Mockito
 
 ### How to run
-In order to run the project, create a local .env file containing \${DB_NAME}, \${DB_PASS}, \${DB_USERNAME} of local MySQL DB running in container.
+In order to run the project, create a local .env file containing the following variables:
 
+    ${DB_NAME}
+    ${DB_PASS}
+    ${DB_USERNAME} 
+To run both ZombieProject and ZombieProjectInterface containers simultaneously, add the following to your .env file.
+
+    COMPOSE_FILE=compose.yaml:../ZombieProjectInterface/compose.yaml
+
+Do note that this assumes both projects share the same root directory. Adjust the paths to the compose files accordingly.
 #### Build and run the project
-        
+The docker compose up --build command needs to be run twice in order for the DB to be properly set up. 
     docker compose up --build
     docker attach zombie-game-interface
 
