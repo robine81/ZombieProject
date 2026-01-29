@@ -52,8 +52,10 @@ INSERT INTO transitions(id, name, origin_scene_id, target_scene_id, scene_descri
 (6, "A1L1S1-A1L1S34-reception-to-front-door-with-keys", 2, 5, "The front entrance lies just across from your desk.", "Check entrance.", FALSE),
 (7, "A1L1S1-A1L2S1-reception-to-coffee-room", 2, 12, "Down the hall and to the left lies the coffee room.", "Go to coffee room.",TRUE),
 (8, "A1L1S1-A1L3S1-reception-to-balcony", 2, 19, "A set of stairs by your desk leads up to the balcony.", "Go to balcony.",TRUE),
-(9, "A1L1S1-A1L1S1-unlock-archives", 2, 2, "Beyond a big metal door and down some stairs to the basement lies the archives. The door is locked, but has a distinct keyhole, you'd recognize the key for it anywhere.", "Unlock archives.", TRUE),
 (10, "A1L1S1-A1L4S1-reception-to-archives", 2, 28, "The door to the archives stands open. A shiver crawls down your spine whenever you look at it. Its mysteries beckon you nonetheless.", "Go to archives.", FALSE);
+
+INSERT INTO transitions(id, name, origin_scene_id, target_scene_id, scene_description, choice_description, is_enabled, consumes_required_items) VALUES
+(9, "A1L1S1-A1L1S1-unlock-archives", 2, 2, "Beyond a big metal door and down some stairs to the basement lies the archives. The door is locked, but has a distinct keyhole, you'd recognize the key for it anywhere.", "Unlock archives.", TRUE, FALSE);
 
 -- transitions from scene 3 A1L1S2-drawer
 INSERT INTO transitions(id, name, origin_scene_id, target_scene_id, scene_description, choice_description, is_enabled) VALUES
@@ -101,7 +103,7 @@ INSERT INTO transitions(id, name, origin_scene_id, target_scene_id, scene_descri
 (104,"A1L1S5-A1L1S6-try-wrong-key",6,7,"","Try this one.",TRUE),
 (105,"A1L1S5-A1L1S6-try-wrong-key",6,7,"","Try this one.",TRUE),
 (106,"A1L1S5-A1L1S6-try-wrong-key",6,7,"","Try this one.",TRUE),
-(107,"A1L1S5-A1L1S7-try-right-key",6,8,"","Try this one.",TRUE)
+(107,"A1L1S5-A1L1S7-try-right-key",6,8,"","Try this one.",TRUE),
 (108,"A1L1S5-A1L1S6-try-wrong-key",6,7,"","Try this one.",TRUE),
 (109,"A1L1S5-A1L1S6-try-wrong-key",6,7,"","Try this one.",TRUE),
 (110,"A1L1S5-A1L1S6-try-wrong-key",6,7,"","Try this one.",TRUE),
@@ -148,7 +150,7 @@ INSERT INTO transitions(id, name, origin_scene_id, target_scene_id, scene_descri
 
 -- transitions from scene 13 A1L2S2-fridge
 INSERT INTO transitions(id, name, origin_scene_id, target_scene_id, scene_description, choice_description, is_enabled) VALUES
-(27,"A1L2S2-A1L2S3-investigate-picture",13,14,"A photograph is stuck to the fridge with magnets.","",TRUE),
+(27,"A1L2S2-A1L2S3-investigate-picture",13,14,"A photograph is stuck to the fridge with magnets.","Investigate photograph.",TRUE),
 (28,"A1L2S2-A1L2S5-open-fridge",13,16,"You know better than to open this fridge. Only horrors await inside.","Open fridge.",TRUE),
 (29,"A1L2S2-A1L2S1-return-from-fridge",13,12,"","Return.",TRUE);
 
@@ -215,7 +217,7 @@ INSERT INTO transitions(id, name, origin_scene_id, target_scene_id, scene_descri
 (48,"A1L4S1-A1L4S2-entrance-to-science",28,29,"","Go north.",TRUE),
 (49,"A1L4S1-A1L4S4-entrance-to-animal-archive",28,32,"","Go east.",TRUE),
 (50,"A1L4S1-A1L4S6-entrance-to-natural-history",28,34,"","Go south.",TRUE),
-(51,"A1L4S1-A1L1S1-entrance-to-reception",28,2,"The stairs back up to the reception welcome you.","",TRUE);
+(51,"A1L4S1-A1L1S1-entrance-to-reception",28,2,"The stairs back up to the reception welcome you.","Return to reception.",TRUE);
 
 -- transitions from scene 29 A1L4S2-science-archive
 INSERT INTO transitions(id, name, origin_scene_id, target_scene_id, scene_description, choice_description, is_enabled) VALUES
