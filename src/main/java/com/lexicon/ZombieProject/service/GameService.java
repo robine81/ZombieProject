@@ -92,7 +92,7 @@ public class GameService {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(scene.getDescription()).append("\n\n");
         for(Transition transition : scene.getAllTransitions()){
-            if (!transition.getEnabled()) continue;
+            if (!transition.getEnabled() || transition.getSceneDescription().isEmpty()) continue;
             stringBuilder.append(transition.getSceneDescription()).append("\n\n");
         }
         return stringBuilder.toString();
