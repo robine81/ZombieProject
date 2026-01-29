@@ -10,6 +10,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASS}
 
     volumes:
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
       - game-files:/var/lib/mysql
 
     networks:

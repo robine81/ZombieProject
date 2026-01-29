@@ -17,7 +17,10 @@ Our project is composed of three services:
 - H2 DB for testing purposes
 - Mockito
 
-### How to run
+### How to run using Github repos, run:
+    git clone https://github.com/robine81/ZombieProject.git
+    git clone https://github.com/TamasTazlo/ZombieProjectInterface.git
+
 In order to run the project, create a local .env file containing the following variables:
 
     ${DB_NAME}
@@ -29,9 +32,19 @@ To run both ZombieProject and ZombieProjectInterface containers simultaneously, 
 
 Do note that this assumes both projects share the same root directory. Adjust the paths to the compose files accordingly.
 #### Build and run the project
-The docker compose up --build command needs to be run twice in order for the DB to be properly set up. 
 
-    docker compose up --build x2
+    docker compose up --build
+    docker attach zombie-game-interface
+
+#### Run the game using Docker Hub:
+#### Download these images: 
+    robinewest/zombie-game:1.0.1
+    robinewest/zombie-interface:1.0.1
+
+    docker pull robinewest/zombie-game:1.0.1
+
+#### In order to run the game from image:
+    docker compose up
     docker attach zombie-game-interface
 
 #### In game commands
@@ -70,11 +83,11 @@ The docker compose up --build command needs to be run twice in order for the DB 
     }
 
 
-Class diagram:  
+### Class diagram:  
 ![Class diagram](DesignDocuments/screenshots/ClassDiagram.png)
 
-Project structure:  
+### Project structure:  
 ![Project structure](DesignDocuments/screenshots/projectstructure.png)
 
-Mockup/use case:  
+### Mockup/use case:  
 ![Mockup](DesignDocuments/screenshots/mockupusecase.png)
